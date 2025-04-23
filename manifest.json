@@ -1,0 +1,10 @@
+{
+    "manifest_version":3,
+    "name":"yabzone",
+    "version":"1.0.0",
+    "description":"chrome extension for audio and text communication while playing game along with the shortcut key",
+    "permissions":["microphone","activetab","storage"],
+    "action":{
+        "default_popup":"popup.html"
+    }
+}
