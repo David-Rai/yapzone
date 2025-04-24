@@ -12,8 +12,8 @@
             "resources": [
                 "styles/trigger.css",
                 "icons/48.png",
-                "chat.html",
-                "chat.js"
+                "scripts/chat.js",
+                "scripts/socket.io.min.js"
             ],
             "matches": [
                 "<all_urls>"
@@ -49,5 +49,9 @@
     ],
     "host_permissions": [
         "<all_urls>"
-    ]
+    ],
+   "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self';"
+}
+
 }

@@ -68,6 +68,8 @@ function render_trigger() {
                 </button>
             </div>
                 `
+
+                loadChatScripts()
         })
     }
 
@@ -85,9 +87,16 @@ return  `
  <div class="chat">
 <h1>chating</h1>
 </div>
-<!-- Socket.IO client CDN -->
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<!-- Handling the Socket connections -->
-<script src="chat.js"></script>
 `
+}
+
+function loadChatScripts() {
+    const socketScript = document.createElement("script");
+    socketScript.src = chrome.runtime.getURL("scripts/socket.io.min.js");
+    socketScript.onload = () => {
+        const chatScript = document.createElement("script");
+        chatScript.src = chrome.runtime.getURL("scripts/chat.js");
+        document.body.appendChild(chatScript);
+    };
+    document.body.appendChild(socketScript);
 }
