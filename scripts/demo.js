@@ -1,16 +1,25 @@
-
-
 window.addEventListener("load", () => {
-    document.title = "yapzone"
-    alert("bro")
+    document.title = "yapzone";
 
-    let trigger = document.createElement("div")
-    trigger.id = "trigger"
-    trigger.innerHTML=`myselffromtheyapzone`
-    trigger.style.position = "absolute"
-    trigger.style.bottom = "10%"
-    trigger.style.right = "5%"
+    //creating the main div
+    let trigger = document.createElement("div");
+    const imgSrc = chrome.runtime.getURL("icons/48.png");
 
-    document.body.appendChild(trigger)
+    //adding the styling to the page
+    let link = document.createElement("link")
+    link.rel = "stylesheet";
+    link.href = chrome.runtime.getURL("styles/trigger.css");
 
-})
+
+    // Setting innerHTML directly
+    trigger.id = "trigger";
+    trigger.innerHTML = `
+        <div class="trigger-bottom">
+        <img src=${imgSrc} alt="image">
+        </div>
+    `;
+
+
+    //Appending the trigger div
+    document.body.appendChild(trigger);
+});

@@ -7,6 +7,17 @@
         "activeTab",
         "storage"
     ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "styles/trigger.css",
+                "icons/48.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
     "action": {
         "default_popup": "popup/popup.html",
         "default_icon": {
@@ -22,10 +33,19 @@
     },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"], 
-            "js": ["scripts/demo.js"],
-            "run_at":"document_end"
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "scripts/demo.js"
+            ],
+            "run_at": "document_end",
+            "css": [
+                "styles/trigger.css"
+            ]
         }
     ],
-    "host_permissions": ["<all_urls>"]
+    "host_permissions": [
+        "<all_urls>"
+    ]
 }

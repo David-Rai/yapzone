@@ -1,0 +1,9 @@
+#trigger{
+    height: 100vh;
+    width: 30%;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    background-color: blue;
+}
