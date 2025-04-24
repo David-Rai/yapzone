@@ -1,6 +1,6 @@
 // GLOBAL VARIABLE
 let trigger;
-let btnState = true;
+let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 
 window.addEventListener("load", () => {
@@ -36,8 +36,8 @@ function render_trigger() {
     } else {
         trigger.innerHTML = `
             <div class="trigger-top">
-                <input type="text" name="username" id="username">
-                <button>Create</button>
+                <input type="text" name="username" id="username" placeholder="username">
+                <button id="trigger-create-button">Create</button>
             </div>
             <div class="trigger-bottom">
                 <button id="trigger-button">

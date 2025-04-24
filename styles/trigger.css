@@ -1,8 +1,8 @@
-:root{
-    --primary:#FA8C2B;
+:root {
+    --primary: #FA8C2B;
 }
 
-#trigger{
+#trigger {
     height: auto;
     width: 30%;
     position: fixed;
@@ -10,32 +10,59 @@
     top: 0;
     right: 0;
     padding: 20px;
+    font-family: "Roboto";
 }
-.trigger-top{
+
+.trigger-top {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 40px;
-    background-color: rgb(89, 88, 88);
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
     width: 100%;
     height: 80vh;
 }
-#trigger-button{
-    border: none;
+
+.trigger-top #username {
+    color: black;
+    padding-left:10px ;
+    border: 2px solid rgb(70, 70, 70);
+    border-radius: 10px;
+    width: 80%;
+    background-color: white;
     height: 40px;
-    width: 120px;
-    background-color: var(--primary);
-    background-color: transparent;
-    /* background-color: rgb(255, 255, 255); */
 }
-.trigger-bottom{
+
+.trigger-top #username::placeholder {
+    color: rgb(141, 137, 137);
+}
+.trigger-top #username:focus{
+    border-color: rgb(116, 178, 243);
+}
+
+#trigger-button {
+    border: none;
+    /* background-color: var(--primary); */
+    background-color: transparent;
+}
+
+.trigger-bottom {
     width: auto;
     height: auto;
     position: fixed;
     bottom: 20px;
-    right:20px;
+    right: 20px;
     display: flex;
     align-items: center;
     justify-content: end;
+}
+
+#trigger-create-button {
+    height: 40px;
+    width: 120px;
+    border: none;
+    background-color: var(--primary);
+    border-radius: 10px;
 }
