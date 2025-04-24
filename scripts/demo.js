@@ -14,8 +14,13 @@ window.addEventListener("load", () => {
     // Setting innerHTML directly
     trigger.id = "trigger";
     trigger.innerHTML = `
+      <div class="trigger-top">
+          <input type="text" name="username" id="username">
+           <button>Create</button>
+        </div>
+
         <div class="trigger-bottom">
-        <img src=${imgSrc} alt="image">
+        <img src=${imgSrc} alt="image" class="trigger-image">
         </div>
     `;
 
