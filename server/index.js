@@ -27,6 +27,14 @@ app.get('/', (req, res) => {
 
 io.on('connection',client=>{
     console.log("new client",client.id)
+
+         //************CREATING THE ROOM*************
+    client.on("createRoom",roomName=>{
+      console.log(roomName)
+      client.join(roomName)
+       client.emit('room-created',{roomName,state:"success"})
+    })
+
 })
 
 

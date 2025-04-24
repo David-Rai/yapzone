@@ -85,7 +85,22 @@ function trigger_toggle() {
 function render_chat(){
 return  `
  <div class="chat">
-<h1>chating</h1>
+<h1>chatting</h1>
+<button class="createRoom">
+create room
+</button>
+
+<div class="copying">
+<p id="roomId">
+here
+</p>
+<button id="handleCopy">copy</button>
+</div>
+
+<input type="text" placeholder="join room" id="joinRoom">
+<button class="joinRoom">   
+join room
+</button>
 </div>
 `
 }

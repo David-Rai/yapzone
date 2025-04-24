@@ -66,3 +66,33 @@
     background-color: var(--primary);
     border-radius: 10px;
 }
+.chat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 100%;
+    height: 80vh;
+}
+.chat h1{
+    color: black;
+    font-size: 20px;
+}
+.chat #roomId{
+    color: black;
+}
+.createRoom{
+    border: none;
+    height: 40px;
+    width: 120px;
+    background-color: var(--primary);
+}
+.joinRoom{
+    border: none;
+    height: 40px;
+    width: 120px;
+    background-color: rgb(34, 186, 241);
+}
