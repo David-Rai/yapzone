@@ -1,16 +1,16 @@
-// demo.js
-setTimeout(()=>{
+
+
+window.addEventListener("load", () => {
     document.title = "yapzone"
     alert("bro")
-    
-const btn=document.createElement("button")
-btn.id="yapzonebutton"
-btn.innerText="clicksadhsdfhaskdfkfgsakdfgahsdfghadsgfksdajgfasdufgsdayufgdaskfgsdahfvsdakadsjgsdahsakd here"
-btn.style.position="absolute"
-btn.style.top="0"
-btn.style.right="0"
 
-console.log(btn)
-document.body.appendChild(btn)
-},5000)
+    let trigger = document.createElement("div")
+    trigger.id = "trigger"
+    trigger.innerHTML=`myselffromtheyapzone`
+    trigger.style.position = "absolute"
+    trigger.style.bottom = "10%"
+    trigger.style.right = "5%"
 
+    document.body.appendChild(trigger)
+
+})
