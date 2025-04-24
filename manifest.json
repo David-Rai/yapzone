@@ -11,7 +11,9 @@
         {
             "resources": [
                 "styles/trigger.css",
-                "icons/48.png"
+                "icons/48.png",
+                "chat.html",
+                "chat.js"
             ],
             "matches": [
                 "<all_urls>"
@@ -37,7 +39,7 @@
                 "<all_urls>"
             ],
             "js": [
-                "scripts/demo.js"
+                "scripts/main.js"
             ],
             "run_at": "document_end",
             "css": [

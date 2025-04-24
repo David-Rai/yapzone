@@ -1,6 +1,6 @@
 // GLOBAL VARIABLE
 let trigger;
-let btnState = false;
+let btnState = true;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 
 window.addEventListener("load", () => {
@@ -54,10 +54,40 @@ function render_trigger() {
             trigger_toggle();
         });
     }
+
+
+    //for creating the socket connection
+    const create_user_trigger = document.querySelector('#trigger-create-button')
+    if (create_user_trigger) {
+        create_user_trigger.addEventListener('click', () => {
+            trigger.innerHTML = `
+           ${render_chat()}
+            <div class="trigger-bottom">
+                <button id="trigger-button">
+                    <img src="${imgSrc}" alt="image" class="trigger-image">
+                </button>
+            </div>
+                `
+        })
+    }
+
 }
 
 // Toggling function
 function trigger_toggle() {
     btnState = !btnState;
     render_trigger(); // re-render and rebind
+}
+
+//rendering chat
+function render_chat(){
+return  `
+ <div class="chat">
+<h1>chating</h1>
+</div>
+<!-- Socket.IO client CDN -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<!-- Handling the Socket connections -->
+<script src="chat.js"></script>
+`
 }
