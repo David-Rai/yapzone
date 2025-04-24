@@ -1,30 +1,63 @@
+// GLOBAL VARIABLE
+let trigger;
+let btnState = true;
+const imgSrc = chrome.runtime.getURL("icons/48.png");
+
 window.addEventListener("load", () => {
     document.title = "yapzone";
 
-    //creating the main div
-    let trigger = document.createElement("div");
-    const imgSrc = chrome.runtime.getURL("icons/48.png");
+    // Create trigger container
+    trigger = document.createElement("div");
+    trigger.id = "trigger";
 
-    //adding the styling to the page
-    let link = document.createElement("link")
+    // Add CSS
+    const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chrome.runtime.getURL("styles/trigger.css");
+    document.head.appendChild(link);
 
+    // Render the UI
+    render_trigger();
 
-    // Setting innerHTML directly
-    trigger.id = "trigger";
-    trigger.innerHTML = `
-      <div class="trigger-top">
-          <input type="text" name="username" id="username">
-           <button>Create</button>
-        </div>
-
-        <div class="trigger-bottom">
-        <img src=${imgSrc} alt="image" class="trigger-image">
-        </div>
-    `;
-
-
-    //Appending the trigger div
+    // Add trigger to DOM
     document.body.appendChild(trigger);
 });
+
+// Rendering function
+function render_trigger() {
+    if (btnState) {
+        trigger.innerHTML = `
+            <div class="trigger-bottom">
+                <button id="trigger-button">
+                    <img src="${imgSrc}" alt="image" class="trigger-image">
+                </button>
+            </div>
+        `;
+    } else {
+        trigger.innerHTML = `
+            <div class="trigger-top">
+                <input type="text" name="username" id="username">
+                <button>Create</button>
+            </div>
+            <div class="trigger-bottom">
+                <button id="trigger-button">
+                    <img src="${imgSrc}" alt="image" class="trigger-image">
+                </button>
+            </div>
+        `;
+    }
+
+    // Attach event listener AFTER rendering
+    const trigger_btn = trigger.querySelector('#trigger-button');
+    if (trigger_btn) {
+        trigger_btn.addEventListener("click", () => {
+            trigger_toggle();
+        });
+    }
+}
+
+// Toggling function
+function trigger_toggle() {
+    btnState = !btnState;
+    render_trigger(); // re-render and rebind
+}
