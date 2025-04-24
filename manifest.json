@@ -4,14 +4,22 @@
     "version": "1.0.0",
     "description": "chrome extension for audio and text communication while playing game along with the shortcut key",
     "permissions": [
-        "microphone",
-        "activetab",
+        "activeTab",
         "storage"
     ],
     "action": {
-        "default_popup": "popup/popup.html"
+        "default_popup": "popup/popup.html",
+         "default_icon":{
+            "16":"icons/16.png",
+            "48":"icons/48.png",
+            "128":"icons/128.png"
+         }
     },
-    "icons": {},
+    "icons": {
+        "16":"icons/16.png",
+        "48":"icons/48.png",
+        "128":"icons/128.png"
+    },
     "background": {
         "service_worker": "background.js",
         "type":"module"
