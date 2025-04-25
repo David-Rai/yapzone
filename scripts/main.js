@@ -4,7 +4,7 @@ let btnState = true;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 
 window.addEventListener("load", () => {
-    document.title = "yapzone"; 
+    document.title = "yapzone";
 
     // Create trigger container
     trigger = document.createElement("div");
@@ -56,7 +56,6 @@ function render_trigger() {
                 if (exists === false) {
                     // alert('no User exists!');
                     return trigger_toggle();
-
                 } else {
                     // alert('user found.');
                     trigger.innerHTML = `
@@ -67,7 +66,11 @@ function render_trigger() {
                 </button>
             </div>
                 `
-
+                    
+                chrome.storage.local.get(['username'],(result) => {
+                    const userId=document.querySelector('.chat #userId')
+                  userId.innerHTML=result.username
+                })
                     loadChatScripts()
                 }
             });
@@ -111,9 +114,10 @@ function trigger_toggle() {
 
 //rendering chat
 function render_chat() {
+
     return `
  <div class="chat">
-<h1>chatting</h1>
+<h1 id="userId">chatting</h1>
 <button class="createRoom">
 create room
 </button>
@@ -164,7 +168,7 @@ function check_user(callback) {
         if (!result.username || result.username.trim() === "") {
             callback(false);
         } else {
-            callback(true); 
+            callback(true);
         }
     });
 }

@@ -1,11 +1,13 @@
 const socket = io("http://localhost:1111");
 const createRoom = document.querySelector(".createRoom")
 const joinRoom = document.querySelector(".joinRoom")
-const joining_roomId= document.querySelector("#joinRoom")
+const joining_roomId = document.querySelector("#joinRoom")
 const roomId = document.querySelector(".chat .copying #roomId")
 const handleCopy = document.querySelector("#handleCopy")
+const userName = document.querySelector(".chat #userId")
 
 
+//creating the unique if for the room
 function getFormattedDate() {
     const now = new Date();
 
@@ -18,6 +20,7 @@ function getFormattedDate() {
 
 //checking if connection established
 socket.on("connect", () => {
+    alert("connected to the server")
     console.log("Connected to server:", socket.id);
 });
 
@@ -44,12 +47,12 @@ socket.on("room-created", ({ roomName, state }) => {
 })
 
 //*********JOINING ROOM */
-if(joinRoom){
-    joinRoom.addEventListener("click",()=>{
-        socket.emit("joinRoom",joining_roomId.value)
+if (joinRoom) {
+    joinRoom.addEventListener("click", () => {
+        socket.emit("joinRoom", joining_roomId.value)
     })
 }
 
-socket.on("joined-message",({message,state})=>{
+socket.on("joined-message", ({ message, state }) => {
     console.log(message)
 })
