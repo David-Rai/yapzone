@@ -30,11 +30,18 @@ io.on('connection',client=>{
 
          //************CREATING THE ROOM*************
     client.on("createRoom",roomName=>{
-      console.log(roomName)
+      console.log("created room",roomName)
       client.join(roomName)
        client.emit('room-created',{roomName,state:"success"})
     })
 
+     //***********JOINING ROOM************
+     client.on('joinRoom',roomId=>{
+      console.log("joined-room",roomId)
+      client.join(roomId)
+
+      io.to(roomId).emit("joined-message",{message:"user joined",state:true})
+     })
 })
 
 
