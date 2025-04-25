@@ -60,6 +60,10 @@ function render_trigger() {
     const create_user_trigger = document.querySelector('#trigger-create-button')
     if (create_user_trigger) {
         create_user_trigger.addEventListener('click', () => {
+            //getting the username
+            const data=document.querySelector('.trigger-top #username')
+            // alert(data.value)
+
             trigger.innerHTML = `
            ${render_chat()}
             <div class="trigger-bottom">
