@@ -60,8 +60,10 @@ function render_trigger() {
     const create_user_trigger = document.querySelector('#trigger-create-button')
     if (create_user_trigger) {
         create_user_trigger.addEventListener('click', () => {
-            //getting the username
-            save_user()
+           
+           if(!save_user()){
+            return
+           }
 
             trigger.innerHTML = `
            ${render_chat()}
@@ -122,7 +124,10 @@ function loadChatScripts() {
 //saving the user into the chrome.storage.local
 function save_user(){
     const data=document.querySelector('.trigger-top #username')
-    if(data.value){
-        console.log(data.value)
+   
+    if(data.value.trim() === ""){
+    return false
     }
+
+    return true
 }
