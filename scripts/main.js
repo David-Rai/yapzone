@@ -4,6 +4,7 @@ let btnState = true;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 
 window.addEventListener("load", () => {
+    chrome.storage.local.set({ username: "" })
     document.title = "yapzone";
 
     // Create trigger container
@@ -51,7 +52,29 @@ function render_trigger() {
     const trigger_btn = trigger.querySelector('#trigger-button');
     if (trigger_btn) {
         trigger_btn.addEventListener("click", () => {
-            trigger_toggle();
+
+            check_user((exists) => {
+                if (exists === false) {
+                    alert('no User exists!');
+                    return trigger_toggle();
+
+                } else {
+                    alert('user found.');
+                    trigger.innerHTML = `
+           ${render_chat()}
+            <div class="trigger-bottom">
+                <button id="trigger-button">
+                    <img src="${imgSrc}" alt="image" class="trigger-image">
+                </button>
+            </div>
+                `
+
+                    loadChatScripts()
+                }
+            });
+
+
+
         });
     }
 
@@ -60,10 +83,11 @@ function render_trigger() {
     const create_user_trigger = document.querySelector('#trigger-create-button')
     if (create_user_trigger) {
         create_user_trigger.addEventListener('click', () => {
-           
-           if(!save_user()){
-            return
-           }
+
+            if (save_user() === false) {
+                alert("name is required")
+                return null
+            }
 
             trigger.innerHTML = `
            ${render_chat()}
@@ -74,7 +98,7 @@ function render_trigger() {
             </div>
                 `
 
-                loadChatScripts()
+            loadChatScripts()
         })
     }
 
@@ -87,8 +111,8 @@ function trigger_toggle() {
 }
 
 //rendering chat
-function render_chat(){
-return  `
+function render_chat() {
+    return `
  <div class="chat">
 <h1>chatting</h1>
 <button class="createRoom">
@@ -122,12 +146,26 @@ function loadChatScripts() {
 }
 
 //saving the user into the chrome.storage.local
-function save_user(){
-    const data=document.querySelector('.trigger-top #username')
-   
-    if(data.value.trim() === ""){
-    return false
+function save_user() {
+    const data = document.querySelector('.trigger-top #username')
+
+    if (data.value.trim() === "") {
+        return false
     }
 
-    return true
+    chrome.storage.local.set({ username: data.value }, () => {
+        // alert(data.value)
+        return true
+    })
+}
+
+//checking if the user exist already
+function check_user(callback) {
+    chrome.storage.local.get(['username'], (result) => {
+        if (!result.username || result.username.trim() === "") {
+            callback(false); // No user found
+        } else {
+            callback(true); // User exists
+        }
+    });
 }
