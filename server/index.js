@@ -36,11 +36,11 @@ io.on('connection',client=>{
     })
 
      //***********JOINING ROOM************
-     client.on('joinRoom',roomId=>{
-      console.log("joined-room",roomId)
+     client.on('joinRoom',({roomId,name})=>{
+      console.log("joined-room",name)
       client.join(roomId)
 
-      io.to(roomId).emit("joined-message",{message:"user joined",state:true})
+      io.to(roomId).emit("joined-message",{message:`${name} joined`})
      })
 })
 

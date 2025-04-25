@@ -39,7 +39,7 @@
                 "<all_urls>"
             ],
             "js": [
-                "scripts/main.js"
+                "scripts/main.js","scripts/storing.js"
             ],
             "run_at": "document_end",
             "css": [

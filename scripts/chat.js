@@ -20,7 +20,7 @@ function getFormattedDate() {
 
 //checking if connection established
 socket.on("connect", () => {
-    alert("connected to the server")
+    // alert("connected to the server")
     console.log("Connected to server:", socket.id);
 });
 
@@ -49,10 +49,12 @@ socket.on("room-created", ({ roomName, state }) => {
 //*********JOINING ROOM */
 if (joinRoom) {
     joinRoom.addEventListener("click", () => {
-        socket.emit("joinRoom", joining_roomId.value)
+        // alert(joining_roomId.value)
+        socket.emit("joinRoom", {roomId:joining_roomId.value,name:userName.innerHTML})
     })
 }
 
-socket.on("joined-message", ({ message, state }) => {
+socket.on("joined-message", ({ message}) => {
+    alert(message)
     console.log(message)
 })
