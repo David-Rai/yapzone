@@ -55,6 +55,5 @@ if (joinRoom) {
 }
 
 socket.on("joined-message", ({ message}) => {
-    alert(message)
-    console.log(message)
+    // alert(message)
 })

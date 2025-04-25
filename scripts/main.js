@@ -66,11 +66,33 @@ function render_trigger() {
                 </button>
             </div>
                 `
+  get_user_name((username) => {
+     const userId = document.querySelector('.chat #userId')
+     userId.innerHTML = username
+  });
+
+                    //rendering the chat room
+                    const joinRoom = document.querySelector(".chat .joinRoom")
+                    if (joinRoom) {
+                        joinRoom.addEventListener("click", () => {
+                            // alert("joining the room")
+                            trigger.innerHTML = `
+                            ${render_chat_room()}
+                             <div class="trigger-bottom">
+                                 <button id="trigger-button">
+                                     <img src="${imgSrc}" alt="image" class="trigger-image">
+                                 </button>
+                             </div>
+                                 `
+                                 get_user_name((username) => {
+                                    const userId = document.querySelector('.chat-room #chat-room-user-name')
+                                    userId.innerHTML = username
+                                 });
+                               
+                        })
+                    }
                     
-                chrome.storage.local.get(['username'],(result) => {
-                    const userId=document.querySelector('.chat #userId')
-                  userId.innerHTML=result.username
-                })
+
                     loadChatScripts()
                 }
             });
@@ -138,6 +160,7 @@ join room
 }
 
 function loadChatScripts() {
+    
     const socketScript = document.createElement("script");
     socketScript.src = chrome.runtime.getURL("scripts/socket.io.min.js");
     socketScript.onload = () => {
@@ -172,3 +195,42 @@ function check_user(callback) {
         }
     });
 }
+
+//rendering the chatting room
+function render_chat_room() {
+
+    return `
+    <div class="chat-room">
+
+    <div class="chat-room-top">
+      <i class="fa-solid fa-bars"></i>
+            <h1 id="chat-room-user-name">username</h1>
+        <i class="fa-solid fa-microphone"></i>
+            </div>
+    </div>
+    `
+}
+
+
+// Check if Font Awesome is already included
+if (!document.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
+    // Create a link element
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+  
+    // Append the link to the head of the document
+    document.head.appendChild(link);
+  
+    console.log('Font Awesome CDN injected');
+  }
+  
+
+// Getting the username (using a callback to handle the async result)
+function get_user_name(callback) {
+    chrome.storage.local.get(['username'], (result) => {
+      // Call the callback with the username (or default to "Guest")
+      callback(result.username || "Guest");
+    });
+  }
+  
