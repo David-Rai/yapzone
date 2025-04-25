@@ -4,8 +4,7 @@ let btnState = true;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 
 window.addEventListener("load", () => {
-    chrome.storage.local.set({ username: "" })
-    document.title = "yapzone";
+    document.title = "yapzone"; 
 
     // Create trigger container
     trigger = document.createElement("div");
@@ -55,11 +54,11 @@ function render_trigger() {
 
             check_user((exists) => {
                 if (exists === false) {
-                    alert('no User exists!');
+                    // alert('no User exists!');
                     return trigger_toggle();
 
                 } else {
-                    alert('user found.');
+                    // alert('user found.');
                     trigger.innerHTML = `
            ${render_chat()}
             <div class="trigger-bottom">
@@ -163,9 +162,9 @@ function save_user() {
 function check_user(callback) {
     chrome.storage.local.get(['username'], (result) => {
         if (!result.username || result.username.trim() === "") {
-            callback(false); // No user found
+            callback(false);
         } else {
-            callback(true); // User exists
+            callback(true); 
         }
     });
 }
