@@ -18,17 +18,24 @@
     border-radius: 10px;
 }
 #trigger {
-    height: auto;
-    width: 30%;
     position: fixed;
+    bottom: 20px;
+    right: 20px;
+    height: 60px;
+    width: 60px;
     z-index: 9999;
-    top: 0;
-    right: 0;
     padding: 20px;
     font-family: "Roboto";
 }
-
-.trigger-top {
+#mainBody{
+    height: 80%;
+    width: 30%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+}
+.main-top {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +47,7 @@
     height: 80vh;
 }
 
-.trigger-top #username {
+.main-top #username {
     color: black;
     padding-left: 10px;
     border: 2px solid rgb(70, 70, 70);
@@ -50,11 +57,11 @@
     height: 40px;
 }
 
-.trigger-top #username::placeholder {
+.main-top #username::placeholder {
     color: rgb(141, 137, 137);
 }
 
-.trigger-top #username:focus {
+.main-top #username:focus {
     border-color: rgb(116, 178, 243);
 }
 
@@ -67,9 +74,6 @@
 .trigger-bottom {
     width: auto;
     height: auto;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
     display: flex;
     align-items: center;
     justify-content: end;
