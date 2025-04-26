@@ -5,7 +5,7 @@ const joining_roomId = document.querySelector("#joinRoom")
 const roomId = document.querySelector(".chat .copying #roomId")
 const handleCopy = document.querySelector("#handleCopy")
 const userName = document.querySelector(".chat #userId")
-const chat_room_name=document.querySelector("#chat-room-name")
+const chat_room_name=document.querySelector(".chat-room #chat-room-name")
 
 
 //creating the unique if for the room
@@ -28,10 +28,17 @@ socket.on("connect", () => {
 //************CREATING THE ROOM*************
 if (createRoom) {
     createRoom.addEventListener("click", () => {
-        const roomName=getFormattedDate()
-        socket.emit("createRoom",roomName)
-    })
+        const roomName = getFormattedDate();
+        alert(roomName);
+
+        const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
+        if (chat_room_name) {
+            chat_room_name.innerHTML = `${roomName}`;
+        }
+        socket.emit("createRoom", roomName);
+    });
 }
+
 
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {

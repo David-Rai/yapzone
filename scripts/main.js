@@ -25,6 +25,10 @@ window.addEventListener("load", () => {
 
     // Render the UI
     render_trigger();
+    
+   //setting up main
+   main_setup()
+
 
     //Adding the eventlistener in the trigger button
     const trigger_btn = trigger.querySelector('#trigger-button');
@@ -36,9 +40,6 @@ window.addEventListener("load", () => {
                 return
             }
             
-   //setting up main
-   main_setup()
-
             mainBody.style.right = "0%"
             btnState = true
 
@@ -99,11 +100,12 @@ function main_setup(){
             if(createRoom){
                 createRoom.addEventListener("click",()=>{
                     alert("lets join the room")
-                // mainBody.innerHTML=`${render_chat_room()}`
+                mainBody.innerHTML=`${render_chat_room()}`
 
                 })
             }
             loadChatScripts()//for adding the socket connection
+            join_room()
 
             //adding the user name
             get_user_name((username) => {
@@ -157,6 +159,7 @@ function join_room(){
                             joinRoom.addEventListener("click", () => {
                                 // alert("joining the room")
                                    mainBody.innerHTML=`${render_chat_room()}`
+
                                      get_user_name((username) => {
                                         const userId = document.querySelector('.chat-room #chat-room-user-name')
                                         userId.innerHTML = username
