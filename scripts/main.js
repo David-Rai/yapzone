@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
     // Add CSS
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = chrome.runtime.getURL("styles/trigger.css");
+    link.href = chrome.runtime.getURL("styles/main.css");
     document.head.appendChild(link);
 
     // Render the UI
@@ -25,7 +25,7 @@ window.addEventListener("load", () => {
 
 // Rendering function
 function render_trigger() {
-    if (btnState) {
+    // if (btnState) {
         trigger.innerHTML = `
             <div class="trigger-bottom">
                 <button id="trigger-button">
@@ -33,98 +33,98 @@ function render_trigger() {
                 </button>
             </div>
         `;
-    } else {
-        trigger.innerHTML = `
-            <div class="trigger-top">
-                <input type="text" name="username" id="username" placeholder="username">
-                <button id="trigger-create-button">Create</button>
-            </div>
-            <div class="trigger-bottom">
-                <button id="trigger-button">
-                    <img src="${imgSrc}" alt="image" class="trigger-image">
-                </button>
-            </div>
-        `;
-    }
+    // } else {
+    //     trigger.innerHTML = `
+    //         <div class="trigger-top">
+    //             <input type="text" name="username" id="username" placeholder="username">
+    //             <button id="trigger-create-button">Create</button>
+    //         </div>
+    //         <div class="trigger-bottom">
+    //             <button id="trigger-button">
+    //                 <img src="${imgSrc}" alt="image" class="trigger-image">
+    //             </button>
+    //         </div>
+    //     `;
+    // }
 
-    // Attach event listener AFTER rendering
-    const trigger_btn = trigger.querySelector('#trigger-button');
-    if (trigger_btn) {
-        trigger_btn.addEventListener("click", () => {
+//     // Attach event listener AFTER rendering
+//     const trigger_btn = trigger.querySelector('#trigger-button');
+//     if (trigger_btn) {
+//         trigger_btn.addEventListener("click", () => {
 
-            check_user((exists) => {
-                if (exists === false) {
-                    // alert('no User exists!');
-                    return trigger_toggle();
-                } else {
-                    // alert('user found.');
-                    trigger.innerHTML = `
-           ${render_chat()}
-            <div class="trigger-bottom">
-                <button id="trigger-button">
-                    <img src="${imgSrc}" alt="image" class="trigger-image">
-                </button>
-            </div>
-                `
-  get_user_name((username) => {
-     const userId = document.querySelector('.chat #userId')
-     userId.innerHTML = username
-  });
+//             check_user((exists) => {
+//                 if (exists === false) {
+//                     // alert('no User exists!');
+//                     return trigger_toggle();
+//                 } else {
+//                     // alert('user found.');
+//                     trigger.innerHTML = `
+//            ${render_chat()}
+//             <div class="trigger-bottom">
+//                 <button id="trigger-button">
+//                     <img src="${imgSrc}" alt="image" class="trigger-image">
+//                 </button>
+//             </div>
+//                 `
+//   get_user_name((username) => {
+//      const userId = document.querySelector('.chat #userId')
+//      userId.innerHTML = username
+//   });
 
-                    //rendering the chat room
-                    const joinRoom = document.querySelector(".chat .joinRoom")
-                    if (joinRoom) {
-                        joinRoom.addEventListener("click", () => {
-                            // alert("joining the room")
-                            trigger.innerHTML = `
-                            ${render_chat_room()}
-                             <div class="trigger-bottom">
-                                 <button id="trigger-button">
-                                     <img src="${imgSrc}" alt="image" class="trigger-image">
-                                 </button>
-                             </div>
-                                 `
-                                 get_user_name((username) => {
-                                    const userId = document.querySelector('.chat-room #chat-room-user-name')
-                                    userId.innerHTML = username
-                                 });
+//                     //rendering the chat room
+//                     const joinRoom = document.querySelector(".chat .joinRoom")
+//                     if (joinRoom) {
+//                         joinRoom.addEventListener("click", () => {
+//                             // alert("joining the room")
+//                             trigger.innerHTML = `
+//                             ${render_chat_room()}
+//                              <div class="trigger-bottom">
+//                                  <button id="trigger-button">
+//                                      <img src="${imgSrc}" alt="image" class="trigger-image">
+//                                  </button>
+//                              </div>
+//                                  `
+//                                  get_user_name((username) => {
+//                                     const userId = document.querySelector('.chat-room #chat-room-user-name')
+//                                     userId.innerHTML = username
+//                                  });
                                
-                        })
-                    }
+//                         })
+//                     }
                     
 
-                    loadChatScripts()
-                }
-            });
+//                     loadChatScripts()
+//                 }
+//             });
 
 
 
-        });
-    }
+//         });
+    // }
 
 
-    //for creating the socket connection
-    const create_user_trigger = document.querySelector('#trigger-create-button')
-    if (create_user_trigger) {
-        create_user_trigger.addEventListener('click', () => {
+    // //for creating the socket connection
+    // const create_user_trigger = document.querySelector('#trigger-create-button')
+    // if (create_user_trigger) {
+    //     create_user_trigger.addEventListener('click', () => {
 
-            if (save_user() === false) {
-                alert("name is required")
-                return null
-            }
+    //         if (save_user() === false) {
+    //             alert("name is required")
+    //             return null
+    //         }
 
-            trigger.innerHTML = `
-           ${render_chat()}
-            <div class="trigger-bottom">
-                <button id="trigger-button">
-                    <img src="${imgSrc}" alt="image" class="trigger-image">
-                </button>
-            </div>
-                `
+    //         trigger.innerHTML = `
+    //        ${render_chat()}
+    //         <div class="trigger-bottom">
+    //             <button id="trigger-button">
+    //                 <img src="${imgSrc}" alt="image" class="trigger-image">
+    //             </button>
+    //         </div>
+    //             `
 
-            loadChatScripts()
-        })
-    }
+    //         loadChatScripts()
+    //     })
+    // }
 
 }
 
@@ -237,7 +237,6 @@ if (!document.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/f
     console.log('Font Awesome CDN injected');
   }
   
-//master
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
     chrome.storage.local.get(['username'], (result) => {
