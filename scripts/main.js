@@ -1,3 +1,4 @@
+
 // GLOBAL VARIABLE
 let trigger;
 let btnState = false;
@@ -37,7 +38,7 @@ window.addEventListener("load", () => {
             
    //setting up main
    main_setup()
-   join_room()
+
             mainBody.style.right = "0%"
             btnState = true
 
@@ -94,7 +95,16 @@ function main_setup(){
             mainBody.innerHTML = `
            ${render_chat()}
             `
-            loadChatScripts()
+            const createRoom=document.querySelector('.chat .createRoom')
+            if(createRoom){
+                createRoom.addEventListener("click",()=>{
+                    alert("lets join the room")
+                mainBody.innerHTML=`${render_chat_room()}`
+
+                })
+            }
+            loadChatScripts()//for adding the socket connection
+
             //adding the user name
             get_user_name((username) => {
                 const userId = document.querySelector('.chat #userId')
@@ -113,38 +123,6 @@ function render_trigger() {
                 </button>
             </div>
         `;
-
-
-    //                     //rendering the chat room
-    //                     const joinRoom = document.querySelector(".chat .joinRoom")
-    //                     if (joinRoom) {
-    //                         joinRoom.addEventListener("click", () => {
-    //                             // alert("joining the room")
-    //                             trigger.innerHTML = `
-    //                             ${render_chat_room()}
-    //                              <div class="trigger-bottom">
-    //                                  <button id="trigger-button">
-    //                                      <img src="${imgSrc}" alt="image" class="trigger-image">
-    //                                  </button>
-    //                              </div>
-    //                                  `
-    //                                  get_user_name((username) => {
-    //                                     const userId = document.querySelector('.chat-room #chat-room-user-name')
-    //                                     userId.innerHTML = username
-    //                                  });
-
-    //                         })
-    //                     }
-
-
-    //                     loadChatScripts()
-    //                 }
-    //             });
-
-
-
-    //         });
-    // }
 
 }
 
@@ -177,9 +155,8 @@ function join_room(){
     const joinRoom = document.querySelector(".chat .joinRoom")
                         if (joinRoom) {
                             joinRoom.addEventListener("click", () => {
-                                alert("joining the room")
+                                // alert("joining the room")
                                    mainBody.innerHTML=`${render_chat_room()}`
-
                                      get_user_name((username) => {
                                         const userId = document.querySelector('.chat-room #chat-room-user-name')
                                         userId.innerHTML = username
@@ -236,9 +213,9 @@ function render_chat_room() {
     <div class="chat-room-top">
      <div class="chat-room-top-left">
          <i class="fa-solid fa-bars"></i>
-            <h1 id="chat-room-user-name">username</h1>
+            <h1 id="chat-room-name">username</h1>
      </div>
-        <i class="fa-solid fa-microphone"></i>
+        <i class="fa-solid fa-microphone audio"></i>
         </div>
 
         

@@ -5,6 +5,7 @@
     "description": "chrome extension for audio and text communication while playing game along with the shortcut key",
     "permissions": [
         "activeTab",
+        "tabs",
         "storage"
     ],
     "web_accessible_resources": [
