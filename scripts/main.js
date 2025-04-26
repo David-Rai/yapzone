@@ -99,13 +99,11 @@ function main_setup(){
             const createRoom=document.querySelector('.chat .createRoom')
             if(createRoom){
                 createRoom.addEventListener("click",()=>{
-                    alert("lets join the room")
                 mainBody.innerHTML=`${render_chat_room()}`
-
                 })
             }
-            loadChatScripts()//for adding the socket connection
             join_room()
+            loadChatScripts()//for adding the socket connection
 
             //adding the user name
             get_user_name((username) => {
@@ -157,14 +155,7 @@ function join_room(){
     const joinRoom = document.querySelector(".chat .joinRoom")
                         if (joinRoom) {
                             joinRoom.addEventListener("click", () => {
-                                // alert("joining the room")
-                                   mainBody.innerHTML=`${render_chat_room()}`
-
-                                     get_user_name((username) => {
-                                        const userId = document.querySelector('.chat-room #chat-room-user-name')
-                                        userId.innerHTML = username
-                                     });
-
+                            mainBody.innerHTML=`${render_chat_room()}`
                             })
                         }
 
@@ -223,12 +214,11 @@ function render_chat_room() {
 
         
 <div class="chat-room-center">
-this is the center
 </div>
 
 <div class="chat-room-bottom">
 <input type="text" placeholder="send message" id="message" class="input">
-<button>send</button>
+<button id="send-message">send</button>
 </div>
     </div>
     `

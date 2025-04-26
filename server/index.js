@@ -42,6 +42,13 @@ io.on('connection',client=>{
 
       io.to(roomId).emit("joined-message",{message:`${name} joined`})
      })
+
+     //******SENDING MESSAGE */
+     client.on("sendMessage",({roomName,message})=>{
+      console.log(message)
+      console.log(roomName)
+      io.to(roomName).emit("message",message)
+     })
 })
 
 

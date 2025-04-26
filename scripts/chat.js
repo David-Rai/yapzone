@@ -5,8 +5,8 @@ const joining_roomId = document.querySelector("#joinRoom")
 const roomId = document.querySelector(".chat .copying #roomId")
 const handleCopy = document.querySelector("#handleCopy")
 const userName = document.querySelector(".chat #userId")
-const chat_room_name=document.querySelector(".chat-room #chat-room-name")
 
+let client_roomName;
 
 //creating the unique if for the room
 function getFormattedDate() {
@@ -29,12 +29,11 @@ socket.on("connect", () => {
 if (createRoom) {
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
-        alert(roomName);
-
         const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${roomName}`;
         }
+        sending()
         socket.emit("createRoom", roomName);
     });
 }
@@ -43,9 +42,10 @@ if (createRoom) {
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {
     console.log(roomName)
+    client_roomName=roomName
+
     if (roomId) {
         roomId.innerHTML = roomName
-
         if (handleCopy) {
             handleCopy.addEventListener("click", () => {
                 navigator.clipboard.writeText(roomId.innerHTML)
@@ -59,10 +59,39 @@ socket.on("room-created", ({ roomName, state }) => {
 if (joinRoom) {
     joinRoom.addEventListener("click", () => {
         // alert(joining_roomId.value)
-        socket.emit("joinRoom", {roomId:joining_roomId.value,name:userName.innerHTML})
+        client_roomName=joining_roomId.value
+        
+        const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
+        if (chat_room_name) {
+            chat_room_name.innerHTML = `${roomName}`;
+        }
+       sending()
+        socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
+    
     })
 }
 
-socket.on("joined-message", ({ message}) => {
-    // alert(message)
+socket.on("joined-message", ({ message }) => {
+    alert(message)
 })
+
+//*********SENDING MESSAGE***********/
+function sending(){
+    const send_message = document.querySelector("#send-message")
+    if (send_message) {
+        send_message.addEventListener('click', () => {
+            const message = document.querySelector(".chat-room-bottom #message")
+              socket.emit("sendMessage",{roomName:client_roomName,message:message.value})
+        })
+    }
+}
+
+//*********RECEIVING THE MESSAGE
+socket.on("message", (message) => {
+    console.log(message)
+    const chat_room_center = document.querySelector(".chat-room-center");
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message"); // Add a class for styling
+    messageElement.innerText = message;
+    chat_room_center.appendChild(messageElement);
+});
