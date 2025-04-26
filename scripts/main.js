@@ -37,6 +37,7 @@ window.addEventListener("load", () => {
             
    //setting up main
    main_setup()
+   join_room()
             mainBody.style.right = "0%"
             btnState = true
 
@@ -78,7 +79,7 @@ function main_setup(){
                         mainBody.innerHTML = `
                         ${render_chat()}
                             `
-            loadChatScripts()
+                       loadChatScripts()
 
                           //adding the user name
                           get_user_name((username) => {
@@ -169,6 +170,24 @@ join room
 </button>
 </div>
 `
+}
+
+//for joining the room
+function join_room(){
+    const joinRoom = document.querySelector(".chat .joinRoom")
+                        if (joinRoom) {
+                            joinRoom.addEventListener("click", () => {
+                                alert("joining the room")
+                                   mainBody.innerHTML=`${render_chat_room()}`
+
+                                     get_user_name((username) => {
+                                        const userId = document.querySelector('.chat-room #chat-room-user-name')
+                                        userId.innerHTML = username
+                                     });
+
+                            })
+                        }
+
 }
 
 function loadChatScripts() {
