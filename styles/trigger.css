@@ -1,7 +1,22 @@
 :root {
     --primary: #FA8C2B;
 }
-
+.input{
+    color: black;
+    padding-left: 10px;
+    border: 2px solid rgb(70, 70, 70);
+    border-radius: 10px;
+    width: 80%;
+    background-color: white;
+    height: 40px;
+}
+.button{
+    height: 40px;
+    width: 120px;
+    border: none;
+    /* background-color: var(--primary); */
+    border-radius: 10px;
+}
 #trigger {
     height: auto;
     width: 30%;
@@ -27,7 +42,7 @@
 
 .trigger-top #username {
     color: black;
-    padding-left:10px ;
+    padding-left: 10px;
     border: 2px solid rgb(70, 70, 70);
     border-radius: 10px;
     width: 80%;
@@ -38,7 +53,8 @@
 .trigger-top #username::placeholder {
     color: rgb(141, 137, 137);
 }
-.trigger-top #username:focus{
+
+.trigger-top #username:focus {
     border-color: rgb(116, 178, 243);
 }
 
@@ -66,7 +82,8 @@
     background-color: var(--primary);
     border-radius: 10px;
 }
-.chat{
+
+.chat {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -77,53 +94,85 @@
     width: 100%;
     height: 80vh;
 }
-.chat h1{
+
+.chat h1 {
     color: black;
     font-size: 20px;
 }
-.chat #roomId{
+
+.chat #roomId {
     color: black;
 }
-.createRoom{
+
+.createRoom {
     border: none;
     height: 40px;
     width: 120px;
     background-color: var(--primary);
 }
-.joinRoom{
+
+.joinRoom {
     border: none;
     height: 40px;
     width: 120px;
     background-color: rgb(34, 186, 241);
 }
-#joinRoom{
+
+#joinRoom {
     color: black;
-    padding-left:10px ;
+    padding-left: 10px;
     border: 2px solid rgb(70, 70, 70);
     border-radius: 10px;
     width: 80%;
     background-color: white;
     height: 40px;
 }
-.copying{
+
+.copying {
     display: flex;
     gap: 10px;
 }
-.chat-room{
+
+.chat-room {
+    position: relative;
+    padding: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    gap: 40px;
+    /* gap: 40px; */
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     width: 100%;
     height: 80vh;
 }
-.chat-room-top{
-    background-color: red;
+
+.chat-room-top {
+    height: 40px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
     color: black;
 }
-.chat-room-top i{
+.chat-room-top-left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.chat-room-center{
+    height: calc(100% - 80px);
+    width: 100%;
+    background-color: yellow;
+}
+.chat-room-top i {
     color: black;
+}
+.chat-room-bottom{
+    height: 40px;
+    width: 100%;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
 }

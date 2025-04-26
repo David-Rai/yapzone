@@ -203,10 +203,22 @@ function render_chat_room() {
     <div class="chat-room">
 
     <div class="chat-room-top">
-      <i class="fa-solid fa-bars"></i>
+     <div class="chat-room-top-left">
+         <i class="fa-solid fa-bars"></i>
             <h1 id="chat-room-user-name">username</h1>
+     </div>
         <i class="fa-solid fa-microphone"></i>
-            </div>
+        </div>
+
+        
+<div class="chat-room-center">
+this is the center
+</div>
+
+<div class="chat-room-bottom">
+<input type="text" placeholder="send message" id="message" class="input">
+<button>send</button>
+</div>
     </div>
     `
 }
