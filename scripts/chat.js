@@ -29,7 +29,6 @@ socket.on("connect", () => {
 if (createRoom) {
     createRoom.addEventListener("click", () => {
         const roomName=getFormattedDate()
-        chat_room_name.innerHTML=roomName
         socket.emit("createRoom",roomName)
     })
 }

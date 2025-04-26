@@ -99,7 +99,7 @@ function main_setup(){
             if(createRoom){
                 createRoom.addEventListener("click",()=>{
                     alert("lets join the room")
-                mainBody.innerHTML=`${render_chat_room()}`
+                // mainBody.innerHTML=`${render_chat_room()}`
 
                 })
             }
