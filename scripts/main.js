@@ -237,7 +237,7 @@ if (!document.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/f
     console.log('Font Awesome CDN injected');
   }
   
-
+//master
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
     chrome.storage.local.get(['username'], (result) => {

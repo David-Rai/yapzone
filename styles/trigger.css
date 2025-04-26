@@ -162,8 +162,8 @@
 }
 .chat-room-center{
     height: calc(100% - 80px);
+    color: black;
     width: 100%;
-    background-color: yellow;
 }
 .chat-room-top i {
     color: black;
@@ -171,7 +171,6 @@
 .chat-room-bottom{
     height: 40px;
     width: 100%;
-    background-color: blue;
     display: flex;
     align-items: center;
     justify-content:space-between;
