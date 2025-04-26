@@ -25,38 +25,6 @@ window.addEventListener("load", () => {
     // Render the UI
     render_trigger();
 
-
-    //checking user if exist or not
-    check_user((exists) => {
-        if (exists === false) {
-            // alert('no User exists!');
-         render_main()
-             //creating the user
-        const create_user_trigger = document.querySelector('#trigger-create-button')
-        if (create_user_trigger) {
-            create_user_trigger.addEventListener('click', () => {
-                // alert("creating the user")
-                if (save_user() === false) {
-                    alert("name is required")
-                    return null
-                }
-                loadChatScripts()
-            })
-        }
-        } else {
-            // alert("user exist")
-            mainBody.innerHTML = `
-           ${render_chat()}
-            `
-                      //adding the user name
-            get_user_name((username) => {
-                const userId = document.querySelector('.chat #userId')
-                userId.innerHTML = username
-            });
-        }
-    })
-
-
     //Adding the eventlistener in the trigger button
     const trigger_btn = trigger.querySelector('#trigger-button');
     if (trigger_btn) {
@@ -66,6 +34,9 @@ window.addEventListener("load", () => {
                 mainBody.style.right = "-100%"
                 return
             }
+            
+   //setting up main
+   main_setup()
             mainBody.style.right = "0%"
             btnState = true
 
@@ -87,6 +58,49 @@ function render_main() {
         <button id="trigger-create-button">Create</button>
     </div>
 `
+}
+
+//setting up the main
+function main_setup(){
+      //checking user if exist or not
+      check_user((exists) => {
+        if (exists === false) {
+            render_main()
+            //creating the user
+            const create_user_trigger = document.querySelector('#trigger-create-button')
+            if (create_user_trigger) {
+                create_user_trigger.addEventListener('click', () => {
+                    // alert("creating the user")
+                    if (save_user() === false) {
+                        alert("name is required")
+                        return null
+                    }else{
+                        mainBody.innerHTML = `
+                        ${render_chat()}
+                            `
+            loadChatScripts()
+
+                          //adding the user name
+                          get_user_name((username) => {
+                              const userId = document.querySelector('.chat #userId')
+                              userId.innerHTML = username
+                          });
+                    }
+                })
+            }
+        } else {
+            // alert("user exist")
+            mainBody.innerHTML = `
+           ${render_chat()}
+            `
+            loadChatScripts()
+            //adding the user name
+            get_user_name((username) => {
+                const userId = document.querySelector('.chat #userId')
+                userId.innerHTML = username
+            });
+        }
+    })
 }
 
 // Rendering function
