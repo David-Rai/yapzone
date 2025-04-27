@@ -28,12 +28,19 @@
     font-family: "Roboto";
 }
 #mainBody{
+    /* resize: both; */
+    /* overflow: auto; */
     height: 80%;
-    width: 30%;
+   width: 60%;
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 9999;
+}
+@media screen and (min-width:700px){
+    #mainBody{
+    width: 30%;
+    }
 }
 .main-top {
     display: flex;
