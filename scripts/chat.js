@@ -2,7 +2,7 @@ const socket = io("http://localhost:1111");
 const createRoom = document.querySelector(".createRoom")
 const joinRoom = document.querySelector(".joinRoom")
 const joining_roomId = document.querySelector("#joinRoom")
-const userName = document.querySelector(".chat #userId")
+const userName = document.querySelector(".chat #yap-userId")
 
 let client_roomName;
 let username
@@ -29,7 +29,7 @@ if (createRoom) {
     username=userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
-        const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
+        const chat_room_name = document.getElementById('yap-chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${roomName}`;
         }
@@ -43,15 +43,6 @@ if (createRoom) {
 socket.on("room-created", ({ roomName, state }) => {
     client_roomName = roomName
 
-    // if (roomId) {
-    //     roomId.innerHTML = roomName
-    //     if (handleCopy) {
-    //         handleCopy.addEventListener("click", () => {
-    //             navigator.clipboard.writeText(roomId.innerHTML)
-    //         })
-    //     }
-
-    // }
 })
 
 //*********JOINING ROOM */
@@ -60,7 +51,7 @@ if (joinRoom) {
         // alert(joining_roomId.value)
         client_roomName = joining_roomId.value
 
-        const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
+        const chat_room_name = document.getElementById('yap-chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${client_roomName}`;
         }
@@ -81,8 +72,11 @@ function sending() {
     if (send_message) {
         send_message.addEventListener('click', () => {
             const message = document.querySelector(".chat-room-bottom #message")
+            if(message.value.trim()===""){
+                return
+            }
             socket.emit("sendMessage", { roomName: client_roomName, message: message.value,name:username })
-            return message.innerHTML=""
+            message.value=""
         })
     }
 }

@@ -46,6 +46,7 @@ window.addEventListener("load", () => {
             
             mainBody.style.right = "0%"
             btnState = true
+            loadChatScripts()//for adding the socket connection
 
         })
     }
@@ -86,11 +87,10 @@ function main_setup(){
                         mainBody.innerHTML = `
                         ${render_chat()}
                             `
-                       loadChatScripts()
 
                           //adding the user name
                           get_user_name((username) => {
-                              const userId = document.querySelector('#chat-room #userId')
+                              const userId = document.querySelector('#chat-room #yap-userId')
                               userId.innerHTML = username
                           });
                     }
@@ -108,11 +108,10 @@ function main_setup(){
                 })
             }
             join_room()
-            loadChatScripts()//for adding the socket connection
 
             //adding the user name
             get_user_name((username) => {
-                const userId = document.querySelector('#chat-top #userId')
+                const userId = document.querySelector('#chat-top #yap-userId')
                 userId.innerHTML = username
             });
         }
@@ -126,7 +125,7 @@ function render_chat() {
 
 <div id="chat-top">
 <img src="${imgSrc}" alt="image" class="trigger-image">
-<h1 id="userId"></h1>
+<h1 id="yap-userId"></h1>
 </div>
 
 <button class="button createRoom ">
@@ -197,7 +196,7 @@ function render_chat_room() {
     <div class="chat-room-top">
      <div class="chat-room-top-left">
          <i class="fa-solid fa-bars"></i>
-            <h1 id="chat-room-name">username</h1>
+            <h1 id="yap-chat-room-name">username</h1>
      </div>
         <i class="fa-solid fa-microphone audio"></i>
         </div>
