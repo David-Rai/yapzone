@@ -2,7 +2,7 @@ const socket = io("http://localhost:1111");
 const createRoom = document.querySelector(".createRoom")
 const joinRoom = document.querySelector(".joinRoom")
 const joining_roomId = document.querySelector("#joinRoom")
-const roomId = document.querySelector(".chat .copying #roomId")
+// const roomId = document.querySelector(".chat .copying #roomId")
 const handleCopy = document.querySelector("#handleCopy")
 const userName = document.querySelector(".chat #userId")
 
@@ -41,18 +41,17 @@ if (createRoom) {
 
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {
-    console.log(roomName)
     client_roomName=roomName
 
-    if (roomId) {
-        roomId.innerHTML = roomName
-        if (handleCopy) {
-            handleCopy.addEventListener("click", () => {
-                navigator.clipboard.writeText(roomId.innerHTML)
-            })
-        }
+    // if (roomId) {
+    //     roomId.innerHTML = roomName
+    //     if (handleCopy) {
+    //         handleCopy.addEventListener("click", () => {
+    //             navigator.clipboard.writeText(roomId.innerHTML)
+    //         })
+    //     }
 
-    }
+    // }
 })
 
 //*********JOINING ROOM */
@@ -88,7 +87,7 @@ function sending(){
 
 //*********RECEIVING THE MESSAGE
 socket.on("message", (message) => {
-    console.log(message)
+    // console.log(message)
     const chat_room_center = document.querySelector(".chat-room-center");
     const messageElement = document.createElement("div");
     messageElement.classList.add("message"); // Add a class for styling
