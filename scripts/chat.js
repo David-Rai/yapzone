@@ -2,8 +2,6 @@ const socket = io("http://localhost:1111");
 const createRoom = document.querySelector(".createRoom")
 const joinRoom = document.querySelector(".joinRoom")
 const joining_roomId = document.querySelector("#joinRoom")
-// const roomId = document.querySelector(".chat .copying #roomId")
-const handleCopy = document.querySelector("#handleCopy")
 const userName = document.querySelector(".chat #userId")
 
 let client_roomName;

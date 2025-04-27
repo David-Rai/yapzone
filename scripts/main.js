@@ -3,6 +3,7 @@
 let trigger;
 let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
+const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 
 window.addEventListener("load", () => {
     document.title = "yapzone";
@@ -85,7 +86,7 @@ function main_setup(){
 
                           //adding the user name
                           get_user_name((username) => {
-                              const userId = document.querySelector('.chat #userId')
+                              const userId = document.querySelector('#chat-room #userId')
                               userId.innerHTML = username
                           });
                     }
@@ -107,7 +108,7 @@ function main_setup(){
 
             //adding the user name
             get_user_name((username) => {
-                const userId = document.querySelector('.chat #userId')
+                const userId = document.querySelector('#chat-top #userId')
                 userId.innerHTML = username
             });
         }
@@ -127,23 +128,20 @@ function render_trigger() {
 }
 
 function render_chat() {
-
     return `
  <div class="chat">
-<h1 id="userId">chatting</h1>
-<button class="createRoom">
+
+<div id="chat-top">
+<img src="${imgSrc}" alt="image" class="trigger-image">
+<h1 id="userId"></h1>
+</div>
+
+<button class="button createRoom ">
 create room
 </button>
 
-<div class="copying">
-<p id="roomId">
-here
-</p>
-<button id="handleCopy">copy</button>
-</div>
-
 <input type="text" placeholder="join room" id="joinRoom">
-<button class="joinRoom">   
+<button class="button joinRoom">   
 join room
 </button>
 </div>
@@ -200,7 +198,6 @@ function check_user(callback) {
 
 //rendering the chatting room
 function render_chat_room() {
-
     return `
     <div class="chat-room">
 
@@ -217,8 +214,10 @@ function render_chat_room() {
 </div>
 
 <div class="chat-room-bottom">
-<input type="text" placeholder="send message" id="message" class="input">
-<button id="send-message">send</button>
+<input type="text" class="input" placeholder="send message" id="message">
+<button id="send-message">
+<img src="${sendSrc}" alt="send">
+</button>
 </div>
     </div>
     `

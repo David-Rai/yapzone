@@ -12,10 +12,10 @@
 }
 .button{
     height: 40px;
-    width: 120px;
+    width: 160px;
     border: none;
     /* background-color: var(--primary); */
-    border-radius: 10px;
+    border-radius: 5px;
 }
 #trigger {
     position: fixed;
@@ -88,6 +88,8 @@
 }
 
 .chat {
+    /* padding: 10px;    */
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,42 +101,49 @@
     height: 80vh;
 }
 
-.chat h1 {
+#chat-top{
+    position: absolute;
+    top: 10px;
+    left: 10px;
     color: black;
+    height: 40px;
+    width: 100%;
+    padding: 20px 10px;
     font-size: 20px;
-}
-
-.chat #roomId {
-    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
 }
 
 .createRoom {
-    border: none;
-    height: 40px;
-    width: 120px;
     background-color: var(--primary);
+    transition: all 200ms ease-in-out;
+}
+.createRoom:hover{
+background-color: #f4ab6b;
 }
 
 .joinRoom {
-    border: none;
-    height: 40px;
-    width: 120px;
+    transition: all 200ms ease-in-out;
     background-color: rgb(34, 186, 241);
 }
+.joinRoom:hover{
+    background-color: rgb(101, 209, 248);
 
+}
 #joinRoom {
     color: black;
     padding-left: 10px;
-    border: 2px solid rgb(70, 70, 70);
-    border-radius: 10px;
+    border: 2px solid rgb(143, 142, 142);
+    border-radius: 5px;
     width: 80%;
     background-color: white;
     height: 40px;
+    transition: all 200ms ease-in-out;
 }
-
-.copying {
-    display: flex;
-    gap: 10px;
+#joinRoom:focus{
+    border: 2px solid rgb(137, 187, 252);
 }
 
 .chat-room {
@@ -180,5 +189,29 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content:space-between;
+    padding:10px 20px;
+    justify-content:center;
+    gap: 10px;
+}
+#message{
+    width: 70%;
+    border: 2px solid rgb(143, 142, 142);
+    border-radius: 5px;
+
+}
+#message:focus{
+    border: 2px solid rgb(137, 187, 252);
+}
+#send-message{
+    border: none;
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#send-message img{
+    height: 100%;
+    object-fit: cover;
 }
