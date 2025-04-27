@@ -63,7 +63,7 @@ if (joinRoom) {
         
         const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
         if (chat_room_name) {
-            chat_room_name.innerHTML = `${roomName}`;
+            chat_room_name.innerHTML = `${client_roomName}`;
         }
        sending()
         socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
