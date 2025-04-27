@@ -224,17 +224,6 @@ background-color: #f4ab6b;
     height: 100%;
     object-fit: cover;
 }
-/* .message-body{
-    background-color: rgb(160, 159, 159);
-    border-radius:3px;
-    width: 50%;
-}
-.message-body .username{
-    color: red;
-}
-.message-body h1{
-    font-size: 1rem;
-} */
 .message-body {
     display: flex;
     flex-direction: column;
@@ -268,4 +257,8 @@ background-color: #f4ab6b;
     background-color: #4a4d52;
     transition: background-color 0.2s ease;
   }
-  
+  .join-message{
+    color: rgb(48, 177, 233);
+    padding: 10px 16px;
+
+  }

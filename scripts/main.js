@@ -145,6 +145,10 @@ function join_room(){
     const joinRoom = document.querySelector(".chat .joinRoom")
                         if (joinRoom) {
                             joinRoom.addEventListener("click", () => {
+                                const roomName=document.querySelector('#joinRoom')
+                                if(roomName.value.trim()===""){
+                                    return
+                                }
                             mainBody.innerHTML=`${render_chat_room()}`
                             })
                         }
