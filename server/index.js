@@ -44,10 +44,9 @@ io.on('connection',client=>{
      })
 
      //******SENDING MESSAGE */
-     client.on("sendMessage",({roomName,message})=>{
-      console.log(message)
-      console.log(roomName)
-      io.to(roomName).emit("message",message)
+     client.on("sendMessage",({roomName,message,name})=>{
+      console.log(`${message} by ${name} in room ${roomName}`)
+      io.to(roomName).emit("message",{message,name})
      })
 })
 

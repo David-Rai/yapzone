@@ -5,6 +5,7 @@ const joining_roomId = document.querySelector("#joinRoom")
 const userName = document.querySelector(".chat #userId")
 
 let client_roomName;
+let username
 
 //creating the unique if for the room
 function getFormattedDate() {
@@ -25,6 +26,7 @@ socket.on("connect", () => {
 
 //************CREATING THE ROOM*************
 if (createRoom) {
+    username=userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
         const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
@@ -39,7 +41,7 @@ if (createRoom) {
 
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {
-    client_roomName=roomName
+    client_roomName = roomName
 
     // if (roomId) {
     //     roomId.innerHTML = roomName
@@ -56,15 +58,16 @@ socket.on("room-created", ({ roomName, state }) => {
 if (joinRoom) {
     joinRoom.addEventListener("click", () => {
         // alert(joining_roomId.value)
-        client_roomName=joining_roomId.value
-        
+        client_roomName = joining_roomId.value
+
         const chat_room_name = document.getElementById('chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${client_roomName}`;
         }
-       sending()
+        sending()
+        username=userName.innerHTML
         socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
-    
+
     })
 }
 
@@ -73,22 +76,26 @@ socket.on("joined-message", ({ message }) => {
 })
 
 //*********SENDING MESSAGE***********/
-function sending(){
+function sending() {
     const send_message = document.querySelector("#send-message")
     if (send_message) {
         send_message.addEventListener('click', () => {
             const message = document.querySelector(".chat-room-bottom #message")
-              socket.emit("sendMessage",{roomName:client_roomName,message:message.value})
+            socket.emit("sendMessage", { roomName: client_roomName, message: message.value,name:username })
+            return message.innerHTML=""
         })
     }
 }
 
 //*********RECEIVING THE MESSAGE
-socket.on("message", (message) => {
+socket.on("message", ({message,name}) => {
     // console.log(message)
     const chat_room_center = document.querySelector(".chat-room-center");
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message"); // Add a class for styling
-    messageElement.innerText = message;
-    chat_room_center.appendChild(messageElement);
+    const messageElement=`
+    <div class="message-body">
+    <p class="username">${name}</p>
+    <h1>${message}</h1>
+    </div>
+    `
+    chat_room_center.innerHTML += messageElement
 });

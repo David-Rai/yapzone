@@ -5,6 +5,8 @@ let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 
+
+//main starting point
 window.addEventListener("load", () => {
     document.title = "yapzone";
 
@@ -15,6 +17,7 @@ window.addEventListener("load", () => {
     //creating the manin body
     mainBody = document.createElement("div")
     mainBody.id = "mainBody"
+    mainBody.classList = "mainBody"
     mainBody.style.right = "-100%"
 
 
@@ -50,6 +53,7 @@ window.addEventListener("load", () => {
     // Add trigger to DOM
     document.body.appendChild(trigger);
     document.body.appendChild(mainBody);
+    check_click()
 });
 
 
@@ -320,4 +324,10 @@ function setupDragAndDrop(element) {
         element.style.left = (e.clientX - offsetX) + 'px';
         element.style.top = (e.clientY - offsetY) + 'px';
     });
+}
+
+
+function check_click(){
+
+
 }
