@@ -115,18 +115,7 @@ function main_setup(){
     })
 }
 
-// Rendering function
-function render_trigger() {
-    trigger.innerHTML = `
-            <div class="trigger-bottom">
-                <button id="trigger-button">
-                    <img src="${imgSrc}" alt="image" class="trigger-image">
-                </button>
-            </div>
-        `;
-
-}
-
+//rendering the chat room
 function render_chat() {
     return `
  <div class="chat">
@@ -242,5 +231,93 @@ function get_user_name(callback) {
     chrome.storage.local.get(['username'], (result) => {
         // Call the callback with the username (or default to "Guest")
         callback(result.username || "Guest");
+    });
+}
+
+//draggable trigger
+
+// Rendering function
+function render_trigger() {
+    trigger.innerHTML = `
+        <div class="trigger-container" draggable="true">
+            <div class="trigger-bottom">
+                <button id="trigger-button">
+                    <img src="${imgSrc}" alt="image" class="trigger-image" 
+                         draggable="false" oncontextmenu="return false">
+                </button>
+            </div>
+        </div>
+    `;
+
+    setupDragAndDrop(trigger.querySelector('.trigger-container'));
+}
+
+function setupDragAndDrop(element) {
+    let offsetX, offsetY;
+    let isDragging = false;
+
+    // ===== PREVENT GOOGLE LENS =====
+    // Block all image interaction vectors
+    element.querySelector('img').addEventListener('dragstart', (e) => e.preventDefault());
+    element.querySelector('img').addEventListener('mousedown', (e) => {
+        if (e.button === 1 || e.button === 2) e.preventDefault(); // Block middle/right click
+    });
+    
+    // ===== DRAGGABLE =====
+    element.addEventListener('dragstart', (e) => {
+        isDragging = true;
+        const rect = e.target.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        
+        // Required for Firefox
+        e.dataTransfer.setData('text/plain', '');
+        e.target.classList.add('dragging');
+        
+        // Create transparent drag image (25x25px transparent PNG)
+        const dragImg = new Image();
+        dragImg.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+        e.dataTransfer.setDragImage(dragImg, 0, 0);
+    });
+
+    element.addEventListener('dragend', () => {
+        isDragging = false;
+        element.classList.remove('dragging');
+    });
+
+    // ===== DROPPABLE =====
+    // Create drop zones (add this class to elements that should accept drops)
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            zone.classList.add('drop-highlight');
+        });
+        
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('drop-highlight');
+        });
+        
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('drop-highlight');
+            
+            // Handle the drop - example: append the dragged element
+            if (isDragging) {
+                const rect = zone.getBoundingClientRect();
+                element.style.position = 'absolute';
+                element.style.left = (e.clientX - rect.left - offsetX) + 'px';
+                element.style.top = (e.clientY - rect.top - offsetY) + 'px';
+                zone.appendChild(element);
+            }
+        });
+    });
+
+    // Update position during drag
+    document.addEventListener('dragover', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        element.style.position = 'fixed';
+        element.style.left = (e.clientX - offsetX) + 'px';
+        element.style.top = (e.clientY - offsetY) + 'px';
     });
 }
