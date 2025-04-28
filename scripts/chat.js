@@ -104,7 +104,6 @@ function sending() {
 
 //*********RECEIVING THE MESSAGE
 socket.on("message", ({ message, name }) => {
-    // alert(message)
     const chat_room_center = document.querySelector(".chat-room-center");
     const messageElement = `
     <div class="message-body">
