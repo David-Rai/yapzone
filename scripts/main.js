@@ -13,9 +13,29 @@ window.addEventListener("load", () => {
 
     //creating the shadow host
     const host = document.createElement("div")
-    host.id="host"
+    host.id = "host"
     document.body.appendChild(host)
     const shadow = host.attachShadow({ mode: "open" })//the shadow root
+
+        // Add CSS
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = chrome.runtime.getURL("styles/main.css");
+
+//     shadow.innerHTML += `
+//     <style>
+// #host{
+//     background-color: red;
+//     height: 100%;
+//     width: 30%;
+//     position: fixed;
+//     top: 20px;
+//     right: 20px;
+//     z-index: 9999;  
+// }
+
+//     </style>
+//     `
 
 
     // Create trigger container
@@ -29,28 +49,22 @@ window.addEventListener("load", () => {
     mainBody.style.right = "-100%"
 
 
-    // Add CSS
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = chrome.runtime.getURL("styles/main.css");
-
     // Render the UI
     render_trigger();
 
     //setting up main
     main_setup()
 
-   setTimeout(()=>{
-    shadow.appendChild(link)
-       // Add trigger to the shadow dom
-       shadow.appendChild(trigger);
-       shadow.appendChild(mainBody);
-   },100)
+    setTimeout(() => {
+        shadow.appendChild(link)
+        // Add trigger to the shadow dom
+        shadow.appendChild(trigger);
+        shadow.appendChild(mainBody);
+    }, 100)
 
 
-//accessing the shadow root
-const shadowRoot=document.querySelector("#host").shadowRoot
-
+    //accessing the shadow root
+    const shadowRoot = document.querySelector("#host").shadowRoot
 
     //Adding the eventlistener in the trigger button
     const trigger_btn = shadowRoot.querySelector('#trigger-button');
