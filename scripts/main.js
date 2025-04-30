@@ -10,6 +10,10 @@ const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 window.addEventListener("load", () => {
     document.title = "yapzone";
 
+    //creating the shadow host
+    const host = document.createElement("div")
+    const shadow = host.attachShadow({ mode: "open" })//the shadow root
+
     // Create trigger container
     trigger = document.createElement("div");
     trigger.id = "trigger";
@@ -25,13 +29,15 @@ window.addEventListener("load", () => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chrome.runtime.getURL("styles/main.css");
-    document.head.appendChild(link);
+    shadow.appendChild(link)
 
     // Render the UI
     render_trigger();
-    
-   //setting up main
-   main_setup()
+
+    //setting up main
+    main_setup()
+
+
 
 
     //Adding the eventlistener in the trigger button
@@ -43,7 +49,7 @@ window.addEventListener("load", () => {
                 mainBody.style.right = "-100%"
                 return
             }
-            
+
             mainBody.style.right = "0%"
             btnState = true
             loadChatScripts()//for adding the socket connection
@@ -51,10 +57,11 @@ window.addEventListener("load", () => {
         })
     }
 
-    // Add trigger to DOM
-    document.body.appendChild(trigger);
-    document.body.appendChild(mainBody);
-    check_click()
+    // Add trigger to the shadow dom
+    shadow.appendChild(trigger);
+    shadow.appendChild(mainBody);
+    document.body.appendChild(shadow)
+    // check_click()
 });
 
 
@@ -70,9 +77,9 @@ function render_main() {
 }
 
 //setting up the main
-function main_setup(){
-      //checking user if exist or not
-      check_user((exists) => {
+function main_setup() {
+    //checking user if exist or not
+    check_user((exists) => {
         if (exists === false) {
             render_main()
             //creating the user
@@ -83,16 +90,16 @@ function main_setup(){
                     if (save_user() === false) {
                         alert("name is required")
                         return null
-                    }else{
+                    } else {
                         mainBody.innerHTML = `
                         ${render_chat()}
                             `
 
-                          //adding the user name
-                          get_user_name((username) => {
-                              const userId = document.querySelector('#chat-room #yap-userId')
-                              userId.innerHTML = username
-                          });
+                        //adding the user name
+                        get_user_name((username) => {
+                            const userId = document.querySelector('#chat-room #yap-userId')
+                            userId.innerHTML = username
+                        });
                     }
                 })
             }
@@ -101,10 +108,10 @@ function main_setup(){
             mainBody.innerHTML = `
            ${render_chat()}
             `
-            const createRoom=document.querySelector('.chat .createRoom')
-            if(createRoom){
-                createRoom.addEventListener("click",()=>{
-                mainBody.innerHTML=`${render_chat_room()}`
+            const createRoom = document.querySelector('.chat .createRoom')
+            if (createRoom) {
+                createRoom.addEventListener("click", () => {
+                    mainBody.innerHTML = `${render_chat_room()}`
                 })
             }
             join_room()
@@ -141,17 +148,17 @@ join room
 }
 
 //for joining the room
-function join_room(){
+function join_room() {
     const joinRoom = document.querySelector(".chat .joinRoom")
-                        if (joinRoom) {
-                            joinRoom.addEventListener("click", () => {
-                                const roomName=document.querySelector('#joinRoom')
-                                if(roomName.value.trim()===""){
-                                    return
-                                }
-                            mainBody.innerHTML=`${render_chat_room()}`
-                            })
-                        }
+    if (joinRoom) {
+        joinRoom.addEventListener("click", () => {
+            const roomName = document.querySelector('#joinRoom')
+            if (roomName.value.trim() === "") {
+                return
+            }
+            mainBody.innerHTML = `${render_chat_room()}`
+        })
+    }
 
 }
 
@@ -269,18 +276,18 @@ function setupDragAndDrop(element) {
     element.querySelector('img').addEventListener('mousedown', (e) => {
         if (e.button === 1 || e.button === 2) e.preventDefault(); // Block middle/right click
     });
-    
+
     // ===== DRAGGABLE =====
     element.addEventListener('dragstart', (e) => {
         isDragging = true;
         const rect = e.target.getBoundingClientRect();
         offsetX = e.clientX - rect.left;
         offsetY = e.clientY - rect.top;
-        
+
         // Required for Firefox
         e.dataTransfer.setData('text/plain', '');
         e.target.classList.add('dragging');
-        
+
         // Create transparent drag image (25x25px transparent PNG)
         const dragImg = new Image();
         dragImg.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
@@ -299,15 +306,15 @@ function setupDragAndDrop(element) {
             e.preventDefault();
             zone.classList.add('drop-highlight');
         });
-        
+
         zone.addEventListener('dragleave', () => {
             zone.classList.remove('drop-highlight');
         });
-        
+
         zone.addEventListener('drop', (e) => {
             e.preventDefault();
             zone.classList.remove('drop-highlight');
-            
+
             // Handle the drop - example: append the dragged element
             if (isDragging) {
                 const rect = zone.getBoundingClientRect();
@@ -330,7 +337,7 @@ function setupDragAndDrop(element) {
 }
 
 
-function check_click(){
+function check_click() {
 
 
 }
