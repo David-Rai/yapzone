@@ -1,6 +1,7 @@
 
 // GLOBAL VARIABLE
 let trigger;
+let mainBody
 let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
@@ -12,7 +13,10 @@ window.addEventListener("load", () => {
 
     //creating the shadow host
     const host = document.createElement("div")
+    host.id="host"
+    document.body.appendChild(host)
     const shadow = host.attachShadow({ mode: "open" })//the shadow root
+
 
     // Create trigger container
     trigger = document.createElement("div");
@@ -29,7 +33,6 @@ window.addEventListener("load", () => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chrome.runtime.getURL("styles/main.css");
-    shadow.appendChild(link)
 
     // Render the UI
     render_trigger();
@@ -37,11 +40,20 @@ window.addEventListener("load", () => {
     //setting up main
     main_setup()
 
+   setTimeout(()=>{
+    shadow.appendChild(link)
+       // Add trigger to the shadow dom
+       shadow.appendChild(trigger);
+       shadow.appendChild(mainBody);
+   },100)
 
+
+//accessing the shadow root
+const shadowRoot=document.querySelector("#host").shadowRoot
 
 
     //Adding the eventlistener in the trigger button
-    const trigger_btn = trigger.querySelector('#trigger-button');
+    const trigger_btn = shadowRoot.querySelector('#trigger-button');
     if (trigger_btn) {
         trigger_btn.addEventListener("click", () => {
             if (btnState) {
@@ -57,9 +69,6 @@ window.addEventListener("load", () => {
         })
     }
 
-    // Add trigger to the shadow dom
-    shadow.appendChild(trigger);
-    shadow.appendChild(mainBody);
     document.body.appendChild(shadow)
     // check_click()
 });
