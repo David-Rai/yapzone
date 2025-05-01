@@ -255,17 +255,11 @@ function render_chat_room() {
 }
 
 
-// // Check if Font Awesome is already included
 function addIcons() {
-    if (!shadowRoot.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
-        // Create a link element
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
-
-        // Append the link to the head of the shadowRoot
-        shadow.appendChild(link);
-    }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = chrome.runtime.getURL('styles/font.min.css');
+    shadow.appendChild(link);
 }
 
 // Getting the username (using a callback to handle the async result)
@@ -278,7 +272,6 @@ function get_user_name(callback) {
     }, 100)
 }
 
-//draggable trigger
 
 // Rendering function
 function render_trigger() {

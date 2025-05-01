@@ -16,7 +16,8 @@
                 "icons/send-message.png",
                 "icons/48.png",
                 "scripts/chat.js",
-                "scripts/socket.io.min.js"
+                "scripts/socket.io.min.js",
+                "styles/font.min.css"
             ],
             "matches": [
                 "<all_urls>"

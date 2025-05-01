@@ -90,7 +90,7 @@ socket.on("joined-message", ({ message }) => {
 
 //*********SENDING MESSAGE***********/
 function sending() {
-    alert("sending")
+    // alert("sending")
     const send_message = shadowRoot.querySelector("#send-message")
     if (send_message) {
         send_message.addEventListener('click', () => {
