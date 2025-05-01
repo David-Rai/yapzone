@@ -34,7 +34,6 @@ if (createRoom) {
         if (chat_room_name) {
             chat_room_name.innerHTML = `${roomName}`;
         }
-        sending()
         socket.emit("createRoom", roomName);
     });
 }
@@ -43,6 +42,7 @@ if (createRoom) {
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {
     client_roomName = roomName
+    sending()
 
 })
 
