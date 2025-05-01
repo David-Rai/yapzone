@@ -4,6 +4,7 @@
 
 #host {
     /* background-color: red; */
+    transition: all 200ms ease-out;
     height: 100%;
     width: 30%;
     position: fixed;

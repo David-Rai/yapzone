@@ -2,6 +2,7 @@
 // GLOBAL VARIABLE
 let trigger;
 let mainBody
+let shadowRoot
 let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
@@ -17,15 +18,15 @@ window.addEventListener("load", () => {
     document.body.appendChild(host)
     const shadow = host.attachShadow({ mode: "open" })//the shadow root
 
-        //accessing the shadow root
-        const shadowRoot = document.querySelector("#host").shadowRoot
+    //accessing the shadow root
+    shadowRoot = document.querySelector("#host").shadowRoot
 
-     //css styling
+    //css styling
     const link = document.createElement("link");
     link.rel = "stylesheet";
     link.href = chrome.runtime.getURL("styles/main.css");
     shadow.appendChild(link);
-    
+
 
 
     // Create trigger container
@@ -36,7 +37,7 @@ window.addEventListener("load", () => {
     mainBody = document.createElement("div")
     mainBody.id = "mainBody"
     mainBody.classList = "mainBody"
-    mainBody.style.right = "-100%"
+    host.style.right = "0%"
 
 
     // Render the UI
@@ -48,27 +49,26 @@ window.addEventListener("load", () => {
     setTimeout(() => {
         // Add trigger to the shadow dom
         shadow.appendChild(trigger);
+
+        //Adding the eventlistener in the trigger button
+        const trigger_btn = shadowRoot.querySelector('#trigger-button');
+        if (trigger_btn) {
+            trigger_btn.addEventListener("click", () => {
+                if (btnState) {
+                    btnState = false
+                    host.style.right = "-100%"
+                    return
+                }
+
+                host.style.right = "0%"
+                btnState = true
+                loadChatScripts()//for adding the socket connection
+
+            })
+        }
         shadow.appendChild(mainBody);
     }, 100)
 
-
-    //Adding the eventlistener in the trigger button
-    const trigger_btn = shadowRoot.querySelector('#trigger-button');
-    if (trigger_btn) {
-        trigger_btn.addEventListener("click", () => {
-            alert("clicked")    
-            if (btnState) {
-                btnState = false
-                mainBody.style.right = "-100%"
-                return
-            }
-
-            mainBody.style.right = "0%"
-            btnState = true
-            loadChatScripts()//for adding the socket connection
-
-        })
-    }
 
     // check_click()
 });
@@ -91,33 +91,41 @@ function main_setup() {
     check_user((exists) => {
         if (exists === false) {
             render_main()
-            //creating the user
-            const create_user_trigger = document.querySelector('#trigger-create-button')
-            if (create_user_trigger) {
-                create_user_trigger.addEventListener('click', () => {
-                    // alert("creating the user")
-                    if (save_user() === false) {
-                        alert("name is required")
-                        return null
-                    } else {
-                        mainBody.innerHTML = `
-                        ${render_chat()}
-                            `
 
-                        //adding the user name
-                        get_user_name((username) => {
-                            const userId = document.querySelector('#chat-room #yap-userId')
-                            userId.innerHTML = username
-                        });
-                    }
-                })
-            }
+            //creating the user
+            setTimeout(() => {
+                const create_user_trigger = shadowRoot.querySelector('#trigger-create-button')
+                if (create_user_trigger) {
+
+                    create_user_trigger.addEventListener('click', () => {
+                        // alert("creating the user")
+                        save_user((state) => {
+                            if (!state) {
+                                alert("name is required")
+                                return null
+                            }
+                            else {
+                                mainBody.innerHTML = `
+                            ${render_chat()}
+                                `
+
+                                //adding the user name
+                                get_user_name((username) => {
+                                    const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                                    userId.innerHTML = username
+                                });
+                            }
+                        })
+
+                    })
+                }
+            }, 100)
         } else {
             // alert("user exist")
             mainBody.innerHTML = `
            ${render_chat()}
             `
-            const createRoom = document.querySelector('.chat .createRoom')
+            const createRoom = shadowRoot.querySelector('.chat .createRoom')
             if (createRoom) {
                 createRoom.addEventListener("click", () => {
                     mainBody.innerHTML = `${render_chat_room()}`
@@ -125,11 +133,14 @@ function main_setup() {
             }
             join_room()
 
-            //adding the user name
-            get_user_name((username) => {
-                const userId = document.querySelector('#chat-top #yap-userId')
-                userId.innerHTML = username
-            });
+            setTimeout(() => {
+                //adding the user name
+                get_user_name((username) => {
+                    const userId = shadowRoot.querySelector('#chat-top #yap-userId')
+                    userId.innerHTML = username
+                });
+            }, 100)
+
         }
     })
 }
@@ -141,7 +152,7 @@ function render_chat() {
 
 <div id="chat-top">
 <img src="${imgSrc}" alt="image" class="trigger-image">
-<h1 id="yap-userId"></h1>
+<h1 id="yap-userId">username</h1>
 </div>
 
 <button class="button createRoom ">
@@ -158,10 +169,10 @@ join room
 
 //for joining the room
 function join_room() {
-    const joinRoom = document.querySelector(".chat .joinRoom")
+    const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
     if (joinRoom) {
         joinRoom.addEventListener("click", () => {
-            const roomName = document.querySelector('#joinRoom')
+            const roomName = shadowRoot.querySelector('#joinRoom')
             if (roomName.value.trim() === "") {
                 return
             }
@@ -178,23 +189,22 @@ function loadChatScripts() {
     socketScript.onload = () => {
         const chatScript = document.createElement("script");
         chatScript.src = chrome.runtime.getURL("scripts/chat.js");
-        document.body.appendChild(chatScript);
+        shadowRoot.appendChild(chatScript);
     };
-    document.body.appendChild(socketScript);
+    shadowRoot.appendChild(socketScript);
 }
 
 //saving the user into the chrome.storage.local
-function save_user() {
-    const data = document.querySelector('.main-top #username')
-
+function save_user(callback) {
+    const data = shadowRoot.querySelector('.main-top #username');
     if (data.value.trim() === "") {
-        return false
+        callback(false);
+        return;
     }
 
     chrome.storage.local.set({ username: data.value }, () => {
-        // alert(data.value)
-        return true
-    })
+        callback(true);
+    });
 }
 
 //checking if the user exist already
@@ -211,7 +221,7 @@ function check_user(callback) {
 //rendering the chatting room
 function render_chat_room() {
     return `
-    <div class="chat-room">
+    <div class="chat-room" id="chat-room">
 
     <div class="chat-room-top">
      <div class="chat-room-top-left">
@@ -236,18 +246,18 @@ function render_chat_room() {
 }
 
 
-// Check if Font Awesome is already included
-if (!document.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
-    // Create a link element
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+// // Check if Font Awesome is already included
+// if (!shadowRoot.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
+//     // Create a link element
+//     const link = document.createElement('link');
+//     link.rel = 'stylesheet';
+//     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
 
-    // Append the link to the head of the document
-    document.head.appendChild(link);
+//     // Append the link to the head of the shadowRoot
+//     shadowRoot.appendChild(link);
 
-    console.log('Font Awesome CDN injected');
-}
+//     console.log('Font Awesome CDN injected');
+// }
 
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
@@ -310,7 +320,7 @@ function setupDragAndDrop(element) {
 
     // ===== DROPPABLE =====
     // Create drop zones (add this class to elements that should accept drops)
-    document.querySelectorAll('.drop-zone').forEach(zone => {
+    shadowRoot.querySelectorAll('.drop-zone').forEach(zone => {
         zone.addEventListener('dragover', (e) => {
             e.preventDefault();
             zone.classList.add('drop-highlight');
@@ -336,7 +346,7 @@ function setupDragAndDrop(element) {
     });
 
     // Update position during drag
-    document.addEventListener('dragover', (e) => {
+    shadowRoot.addEventListener('dragover', (e) => {
         if (!isDragging) return;
         e.preventDefault();
         element.style.position = 'fixed';
