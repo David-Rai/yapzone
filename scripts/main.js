@@ -2,7 +2,7 @@
 // GLOBAL VARIABLE
 let trigger;
 let mainBody
-let shadowRoot,shadow
+let shadowRoot, shadow
 let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
@@ -16,11 +16,11 @@ window.addEventListener("load", () => {
     const host = document.createElement("div")
     host.id = "host"
     document.body.appendChild(host)
-     shadow = host.attachShadow({ mode: "open" })//the shadow root
+    shadow = host.attachShadow({ mode: "open" })//the shadow root
 
     //accessing the shadow root
     shadowRoot = document.querySelector("#host").shadowRoot
-    addIcons()
+    // addIcons()
 
     //css styling
     const link = document.createElement("link");
@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
     mainBody = document.createElement("div")
     mainBody.id = "mainBody"
     mainBody.classList = "mainBody"
-    host.style.right = "-100%"
+    host.style.transform = "translatex(-100%)"
 
 
     // Render the UI
@@ -57,11 +57,14 @@ window.addEventListener("load", () => {
             trigger_btn.addEventListener("click", () => {
                 if (btnState) {
                     btnState = false
-                    host.style.right = "-100%"
+                    // host.style.right = "-100%"
+    host.style.transform = "translatex(-100%)"  
                     return
                 }
 
-                host.style.right = "0%"
+                // host.style.right = "0%"
+    host.style.transform = "translatex(0%)"
+
                 btnState = true
                 loadChatScripts()//for adding the socket connection
 
@@ -175,18 +178,18 @@ join room
 
 //for joining the room
 function join_room() {
-    setTimeout(()=>{
-    const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
-    if (joinRoom) {
-        joinRoom.addEventListener("click", () => {
-            const roomName = shadowRoot.querySelector('#joinRoom')
-            if (roomName.value.trim() === "") {
-                return
-            }
-            mainBody.innerHTML = `${render_chat_room()}`
-        })
-    }
-},100)
+    setTimeout(() => {
+        const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
+        if (joinRoom) {
+            joinRoom.addEventListener("click", () => {
+                const roomName = shadowRoot.querySelector('#joinRoom')
+                if (roomName.value.trim() === "") {
+                    return
+                }
+                mainBody.innerHTML = `${render_chat_room()}`
+            })
+        }
+    }, 100)
 
 
 }
@@ -234,10 +237,14 @@ function render_chat_room() {
 
     <div class="chat-room-top">
      <div class="chat-room-top-left">
-         <i class="fa-solid fa-bars"></i>
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
             <h1 id="yap-chat-room-name">room name</h1>
      </div>
-        <i class="fa-solid fa-microphone audio"></i>
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 9a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7zm-1-2v3h2v-3h-2z"/>
+</svg>
         </div>
 
         
@@ -255,12 +262,13 @@ function render_chat_room() {
 }
 
 
-function addIcons() {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = chrome.runtime.getURL('styles/font.min.css');
-    shadow.appendChild(link);
-}
+// function addIcons() {
+//     const style = document.createElement("link");
+//     style.setAttribute("rel", "stylesheet");
+//     style.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
+
+//     shadow.appendChild(style);
+// }
 
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
