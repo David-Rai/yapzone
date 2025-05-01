@@ -1,5 +1,5 @@
 const socket = io("http://localhost:1111");
-const shadowRoot=document.querySelector("#host").shadowRoot
+const shadowRoot = document.querySelector("#host").shadowRoot
 const createRoom = shadowRoot.querySelector(".createRoom")
 const joinRoom = shadowRoot.querySelector(".joinRoom")
 const joining_roomId = shadowRoot.querySelector("#joinRoom")
@@ -49,7 +49,7 @@ socket.on("room-created", ({ roomName, state }) => {
 //*********JOINING ROOM */
 if (joinRoom) {
     joinRoom.addEventListener("click", () => {
-        if(joining_roomId.value.trim() === ""){
+        if (joining_roomId.value.trim() === "") {
             return
         }
         // alert(joining_roomId.value)
@@ -90,7 +90,19 @@ socket.on("joined-message", ({ message }) => {
 
 //*********SENDING MESSAGE***********/
 function sending() {
-    // alert("sending")
+    const message = shadowRoot.querySelector(".chat-room-bottom #message")
+    if (message) {
+        message.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                if( message.value.trim() === ""){
+                    return
+                 }
+                socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
+                message.value = ""
+            }
+        })
+    }
+
     const send_message = shadowRoot.querySelector("#send-message")
     if (send_message) {
         send_message.addEventListener('click', () => {

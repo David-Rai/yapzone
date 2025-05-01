@@ -358,9 +358,3 @@ function setupDragAndDrop(element) {
         element.style.top = (e.clientY - offsetY) + 'px';
     });
 }
-
-
-function check_click() {
-
-
-}

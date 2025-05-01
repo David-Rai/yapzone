@@ -140,6 +140,7 @@
 }
 
 .createRoom {
+    color: white;
     background-color: var(--primary);
     transition: all 200ms ease-in-out;
 }
@@ -149,6 +150,7 @@
 }
 
 .joinRoom {
+    color: white;
     transition: all 200ms ease-in-out;
     background-color: rgb(34, 186, 241);
 }

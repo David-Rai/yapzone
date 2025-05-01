@@ -11,6 +11,7 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "styles/*.css",
                 "styles/trigger.css",
                 "styles/main.css",
                 "icons/send-message.png",
