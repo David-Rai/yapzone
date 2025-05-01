@@ -38,7 +38,7 @@ window.addEventListener("load", () => {
     mainBody = document.createElement("div")
     mainBody.id = "mainBody"
     mainBody.classList = "mainBody"
-    host.style.right = "0%"
+    host.style.right = "-100%"
 
 
     // Render the UI
@@ -175,6 +175,7 @@ join room
 
 //for joining the room
 function join_room() {
+    setTimeout(()=>{
     const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
     if (joinRoom) {
         joinRoom.addEventListener("click", () => {
@@ -185,6 +186,8 @@ function join_room() {
             mainBody.innerHTML = `${render_chat_room()}`
         })
     }
+},100)
+
 
 }
 
