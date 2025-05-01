@@ -237,13 +237,13 @@
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
     justify-content: center;
-    gap: 10px;
+    padding: 10px 0px;
+    gap: 5px;
 }
 
 #message {
-    width: 70%;
+    width: 80%;
     border: 2px solid rgb(143, 142, 142);
     border-radius: 5px;
 
