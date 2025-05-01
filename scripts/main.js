@@ -17,12 +17,15 @@ window.addEventListener("load", () => {
     document.body.appendChild(host)
     const shadow = host.attachShadow({ mode: "open" })//the shadow root
 
-        // Add CSS
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = chrome.runtime.getURL("styles/main.css");
-        shadow.appendChild(link)
+        //accessing the shadow root
+        const shadowRoot = document.querySelector("#host").shadowRoot
 
+     //css styling
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = chrome.runtime.getURL("styles/main.css");
+    shadow.appendChild(link);
+    
 
 
     // Create trigger container
@@ -49,14 +52,11 @@ window.addEventListener("load", () => {
     }, 100)
 
 
-    //accessing the shadow root
-    const shadowRoot = document.querySelector("#host").shadowRoot
-
     //Adding the eventlistener in the trigger button
     const trigger_btn = shadowRoot.querySelector('#trigger-button');
     if (trigger_btn) {
         trigger_btn.addEventListener("click", () => {
-            alert("clicked")
+            alert("clicked")    
             if (btnState) {
                 btnState = false
                 mainBody.style.right = "-100%"

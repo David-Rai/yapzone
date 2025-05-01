@@ -2,8 +2,8 @@
     --primary: #FA8C2B;
 }
 
-:host {
-    background-color: red;
+#host {
+    /* background-color: red; */
     height: 100%;
     width: 30%;
     position: fixed;
@@ -48,7 +48,7 @@
 
 @media screen and (min-width:700px) {
     #mainBody {
-        width: 30%;
+        width: 100%;
     }
 }
 

@@ -12,6 +12,7 @@
         {
             "resources": [
                 "styles/trigger.css",
+                "styles/main.css",
                 "icons/send-message.png",
                 "icons/48.png",
                 "scripts/chat.js",
