@@ -42,7 +42,8 @@
     font-family: "Roboto";
 }
 
-#mainBody {
+#mainBody { 
+    transition: all 200ms;
     height: 100%;
     width: 100%;
 }

@@ -38,7 +38,9 @@ window.addEventListener("load", () => {
     mainBody = document.createElement("div")
     mainBody.id = "mainBody"
     mainBody.classList = "mainBody"
-    host.style.transform = "translatex(-100%)"
+    // host.style.right = "-100%"
+    mainBody.style.transform="translateX(150%)"
+
 
 
     // Render the UI
@@ -58,12 +60,13 @@ window.addEventListener("load", () => {
                 if (btnState) {
                     btnState = false
                     // host.style.right = "-100%"
-    host.style.transform = "translatex(-100%)"  
+    mainBody.style.transform="translateX(150%)"
+
                     return
                 }
 
                 // host.style.right = "0%"
-    host.style.transform = "translatex(0%)"
+    mainBody.style.transform="translateX(0%)"
 
                 btnState = true
                 loadChatScripts()//for adding the socket connection
