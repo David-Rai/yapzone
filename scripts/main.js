@@ -39,7 +39,7 @@ window.addEventListener("load", () => {
     mainBody.id = "mainBody"
     mainBody.classList = "mainBody"
     // host.style.right = "-100%"
-    mainBody.style.transform="translateX(150%)"
+    mainBody.style.transform = "translateX(150%)"
 
 
 
@@ -60,13 +60,13 @@ window.addEventListener("load", () => {
                 if (btnState) {
                     btnState = false
                     // host.style.right = "-100%"
-    mainBody.style.transform="translateX(150%)"
+                    mainBody.style.transform = "translateX(150%)"
 
                     return
                 }
 
                 // host.style.right = "0%"
-    mainBody.style.transform="translateX(0%)"
+                mainBody.style.transform = "translateX(0%)"
 
                 btnState = true
                 loadChatScripts()//for adding the socket connection
@@ -79,9 +79,6 @@ window.addEventListener("load", () => {
         join_room()
 
     }, 100)
-
-
-    // check_click()
 });
 
 
@@ -243,7 +240,8 @@ function render_chat_room() {
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
   <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
-            <h1 id="yap-chat-room-name">room name</h1>
+           
+<h1 id="yap-room-id">RoomID-<p id="yap-chat-room-name">room name</p></h1>
      </div>
      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
   <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 9a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7zm-1-2v3h2v-3h-2z"/>

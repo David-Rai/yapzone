@@ -119,7 +119,12 @@
     width: 100%;
     height: 80vh;
 }
-
+#yap-room-id{
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #chat-top #yap-userId {
     font-size: 1rem;
     color: black;
@@ -199,7 +204,7 @@
 
 #yap-chat-room-name {
     color: black;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 .chat-room-top-left {
