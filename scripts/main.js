@@ -2,7 +2,7 @@
 // GLOBAL VARIABLE
 let trigger;
 let mainBody
-let shadowRoot
+let shadowRoot,shadow
 let btnState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
@@ -16,10 +16,11 @@ window.addEventListener("load", () => {
     const host = document.createElement("div")
     host.id = "host"
     document.body.appendChild(host)
-    const shadow = host.attachShadow({ mode: "open" })//the shadow root
+     shadow = host.attachShadow({ mode: "open" })//the shadow root
 
     //accessing the shadow root
     shadowRoot = document.querySelector("#host").shadowRoot
+    addIcons()
 
     //css styling
     const link = document.createElement("link");
@@ -67,6 +68,10 @@ window.addEventListener("load", () => {
             })
         }
         shadow.appendChild(mainBody);
+
+        create_room()
+        join_room()
+
     }, 100)
 
 
@@ -125,26 +130,27 @@ function main_setup() {
             mainBody.innerHTML = `
            ${render_chat()}
             `
-            const createRoom = shadowRoot.querySelector('.chat .createRoom')
-            if (createRoom) {
-                createRoom.addEventListener("click", () => {
-                    mainBody.innerHTML = `${render_chat_room()}`
-                })
-            }
-            join_room()
-
-            setTimeout(() => {
-                //adding the user name
-                get_user_name((username) => {
-                    const userId = shadowRoot.querySelector('#chat-top #yap-userId')
-                    userId.innerHTML = username
-                });
-            }, 100)
+            //adding the user name
+            get_user_name((username) => {
+                const userId = shadowRoot.querySelector('#chat-top #yap-userId')
+                userId.innerHTML = username
+            });
 
         }
     })
 }
 
+//creating the room 
+function create_room() {
+    setTimeout(() => {
+        const createRoom = shadowRoot.querySelector('.chat .createRoom')
+        if (createRoom) {
+            createRoom.addEventListener("click", () => {
+                mainBody.innerHTML = `${render_chat_room()}`
+            })
+        }
+    }, 100)
+}
 //rendering the chat room
 function render_chat() {
     return `
@@ -226,7 +232,7 @@ function render_chat_room() {
     <div class="chat-room-top">
      <div class="chat-room-top-left">
          <i class="fa-solid fa-bars"></i>
-            <h1 id="yap-chat-room-name">username</h1>
+            <h1 id="yap-chat-room-name">room name</h1>
      </div>
         <i class="fa-solid fa-microphone audio"></i>
         </div>
@@ -247,24 +253,26 @@ function render_chat_room() {
 
 
 // // Check if Font Awesome is already included
-// if (!shadowRoot.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
-//     // Create a link element
-//     const link = document.createElement('link');
-//     link.rel = 'stylesheet';
-//     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
+function addIcons() {
+    if (!shadowRoot.querySelector('link[href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"]')) {
+        // Create a link element
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
 
-//     // Append the link to the head of the shadowRoot
-//     shadowRoot.appendChild(link);
-
-//     console.log('Font Awesome CDN injected');
-// }
+        // Append the link to the head of the shadowRoot
+        shadow.appendChild(link);
+    }
+}
 
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
-    chrome.storage.local.get(['username'], (result) => {
-        // Call the callback with the username (or default to "Guest")
-        callback(result.username || "Guest");
-    });
+    setTimeout(() => {
+        chrome.storage.local.get(['username'], (result) => {
+            // Call the callback with the username (or default to "Guest")
+            callback(result.username || "Guest");
+        });
+    }, 100)
 }
 
 //draggable trigger

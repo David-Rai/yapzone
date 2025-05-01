@@ -1,8 +1,9 @@
 const socket = io("http://localhost:1111");
-const createRoom = document.querySelector(".createRoom")
-const joinRoom = document.querySelector(".joinRoom")
-const joining_roomId = document.querySelector("#joinRoom")
-const userName = document.querySelector(".chat #yap-userId")
+const shadowRoot=document.querySelector("#host").shadowRoot
+const createRoom = shadowRoot.querySelector(".createRoom")
+const joinRoom = shadowRoot.querySelector(".joinRoom")
+const joining_roomId = shadowRoot.querySelector("#joinRoom")
+const userName = shadowRoot.querySelector(".chat #yap-userId")
 
 let client_roomName;
 let username
@@ -29,7 +30,7 @@ if (createRoom) {
     username = userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
-        const chat_room_name = document.getElementById('yap-chat-room-name'); // get it fresh
+        const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${roomName}`;
         }
@@ -54,7 +55,7 @@ if (joinRoom) {
         // alert(joining_roomId.value)
         client_roomName = joining_roomId.value
 
-        const chat_room_name = document.getElementById('yap-chat-room-name'); // get it fresh
+        const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
         if (chat_room_name) {
             chat_room_name.innerHTML = `${client_roomName}`;
         }
@@ -66,7 +67,7 @@ if (joinRoom) {
 }
 socket.on("joined-message", ({ message }) => {
     // Find the chat room container
-    const chat_room_center = document.querySelector(".chat-room-center");
+    const chat_room_center = shadowRoot.querySelector(".chat-room-center");
 
     if (chat_room_center) {
         // Create the message element
@@ -76,7 +77,7 @@ socket.on("joined-message", ({ message }) => {
     } else {
         // Retry after 100ms if chat_room_center is not available
         setTimeout(() => {
-            const chat_room = document.querySelector(".chat-room-center");
+            const chat_room = shadowRoot.querySelector(".chat-room-center");
             if (chat_room) {
                 const messageElement = `<p class="join-message">${message}</p>`;
                 // Append the message to the chat room center
@@ -89,10 +90,11 @@ socket.on("joined-message", ({ message }) => {
 
 //*********SENDING MESSAGE***********/
 function sending() {
-    const send_message = document.querySelector("#send-message")
+    alert("sending")
+    const send_message = shadowRoot.querySelector("#send-message")
     if (send_message) {
         send_message.addEventListener('click', () => {
-            const message = document.querySelector(".chat-room-bottom #message")
+            const message = shadowRoot.querySelector(".chat-room-bottom #message")
             if (message.value.trim() === "") {
                 return
             }
@@ -104,7 +106,7 @@ function sending() {
 
 //*********RECEIVING THE MESSAGE
 socket.on("message", ({ message, name }) => {
-    const chat_room_center = document.querySelector(".chat-room-center");
+    const chat_room_center = shadowRoot.querySelector(".chat-room-center");
     const messageElement = `
     <div class="message-body">
     <p class="username">${name}</p>
