@@ -119,11 +119,16 @@ function sending() {
 //*********RECEIVING THE MESSAGE
 socket.on("message", ({ message, name }) => {
     const chat_room_center = shadowRoot.querySelector(".chat-room-center");
+
     const messageElement = `
-    <div class="message-body">
-    <p class="username">${name}</p>
-    <h1>${message}</h1>
-    </div>
-    `
-    chat_room_center.innerHTML += messageElement
+        <div class="message-body">
+            <p class="username">${name}</p>
+            <h1>${message}</h1>
+        </div>
+    `;
+
+    chat_room_center.innerHTML += messageElement;
+
+    // Auto-scroll to bottom
+    chat_room_center.scrollTop = chat_room_center.scrollHeight;
 });
