@@ -52,6 +52,9 @@
     #mainBody {
         width: 100%;
     }
+    #host{
+        width: 30%;
+    }
 }
 
 .main-top {

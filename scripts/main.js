@@ -182,6 +182,18 @@ function join_room() {
     setTimeout(() => {
         const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
         if (joinRoom) {
+            const roomName = shadowRoot.querySelector('#joinRoom')
+            if (roomName) {
+                roomName.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        if (roomName.value.trim() === "") {
+                            return
+                        }
+                        mainBody.innerHTML = `${render_chat_room()}`
+                    }
+                })
+            }
+
             joinRoom.addEventListener("click", () => {
                 const roomName = shadowRoot.querySelector('#joinRoom')
                 if (roomName.value.trim() === "") {

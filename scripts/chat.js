@@ -48,23 +48,42 @@ socket.on("room-created", ({ roomName, state }) => {
 
 //*********JOINING ROOM */
 if (joinRoom) {
+
+    if (joining_roomId) {
+        joining_roomId.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                if (joining_roomId.value.trim() === "") {
+                    return
+                }
+                let_join()
+
+            }
+        })
+    }
+
+
     joinRoom.addEventListener("click", () => {
         if (joining_roomId.value.trim() === "") {
             return
         }
-        // alert(joining_roomId.value)
-        client_roomName = joining_roomId.value
-
-        const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
-        if (chat_room_name) {
-            chat_room_name.innerHTML = `${client_roomName}`;
-        }
-        sending()
-        username = userName.innerHTML
-        socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
-
+        let_join()
     })
 }
+
+function let_join() {
+    // alert(joining_roomId.value)
+    client_roomName = joining_roomId.value
+
+    const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+    if (chat_room_name) {
+        chat_room_name.innerHTML = `${client_roomName}`;
+    }
+    sending()
+    username = userName.innerHTML
+    socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
+
+}
+
 socket.on("joined-message", ({ message }) => {
     // Find the chat room container
     const chat_room_center = shadowRoot.querySelector(".chat-room-center");
@@ -94,9 +113,9 @@ function sending() {
     if (message) {
         message.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                if( message.value.trim() === ""){
+                if (message.value.trim() === "") {
                     return
-                 }
+                }
                 socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
                 message.value = ""
             }
