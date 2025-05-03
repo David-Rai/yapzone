@@ -20,12 +20,18 @@ app.use(cors({
   ]
 }))
 
+const users=["me the admin"]
+
 app.get('/', (req, res) => {
-  res.send('Hello World');
+
+  res.json({
+    users_ids:users
+  });
 });
 
 
 io.on('connection',client=>{
+     users.push(client.id)
     console.log("new client",client.id)
 
          //************CREATING THE ROOM*************
