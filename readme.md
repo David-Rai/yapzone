@@ -9,6 +9,7 @@
 
 # Architecture
 <img src="./public//Screenshot 2025-04-25 210039.png" alt="joining room feature">
+<img src="./public/a2.png" alt="joining room feature">
 
 ```bash
 git clone https://github.com/david-rai/yapzone.git

@@ -1,4 +1,7 @@
-const socket = io("https://yapzone-h6e1.onrender.com/");
+const socket = io("http://localhost:1111",{
+    reconnectionAttempts: 3, // Optional: limit retry attempts
+    timeout: 5000     
+});
 const shadowRoot = document.querySelector("#host").shadowRoot
 const createRoom = shadowRoot.querySelector(".createRoom")
 const joinRoom = shadowRoot.querySelector(".joinRoom")
@@ -18,6 +21,14 @@ function getFormattedDate() {
 
     return `${hours}:${minutes}:${seconds}`;
 }
+
+
+//***********SOCKET CONNECTION ERROR********** */
+socket.on("connect_error",(err)=>{
+    if(err){
+        console.log(err)
+    }
+})
 
 //checking if connection established
 socket.on("connect", () => {

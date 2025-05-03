@@ -43,7 +43,6 @@ window.addEventListener("load", () => {
 
 
 
-
     // Render the UI
     render_trigger();
 
@@ -212,9 +211,10 @@ function loadChatScripts() {
     const socketScript = document.createElement("script");
     socketScript.src = chrome.runtime.getURL("scripts/socket.io.min.js");
     socketScript.onload = () => {
-        const chatScript = document.createElement("script");
-        chatScript.src = chrome.runtime.getURL("scripts/chat.js");
-        shadowRoot.appendChild(chatScript);
+        chrome.runtime.sendMessage({action:"socket.min.js"},(response)=>{
+            alert(response)
+            // console.log(response)
+        })
     };
     shadowRoot.appendChild(socketScript);
 }
