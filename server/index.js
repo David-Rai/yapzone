@@ -20,22 +20,25 @@ app.use(cors({
   ]
 }))
 
-let users=["me the admin"]
+let data={
+  number:0,
+  users:[],
+  rooms:[]
+}
 
 app.get('/', (req, res) => {
-
-  res.json({
-    users_ids:users
-  });
+  res.json(data);
 });
 
 
 io.on('connection',client=>{
-     users.push(client.id)
+     data.number +=1
+     data.users.push(client.id)
     console.log("new client",client.id)
 
          //************CREATING THE ROOM*************
     client.on("createRoom",roomName=>{
+      data.rooms.push(roomName)
       console.log("created room",roomName)
       client.join(roomName)
        client.emit('room-created',{roomName,state:"success"})
@@ -58,6 +61,6 @@ io.on('connection',client=>{
 
 
 server.listen(PORT, () => {
-  users=[]
-  console.log(`Server running on port`);
+  data={}
+  console.log(`Server running on ${PORT}`);
 });
