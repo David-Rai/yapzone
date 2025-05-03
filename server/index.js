@@ -20,7 +20,7 @@ app.use(cors({
   ]
 }))
 
-const users=["me the admin"]
+let users=["me the admin"]
 
 app.get('/', (req, res) => {
 
@@ -58,5 +58,6 @@ io.on('connection',client=>{
 
 
 server.listen(PORT, () => {
+  users=[]
   console.log(`Server running on port`);
 });
