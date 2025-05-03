@@ -1,4 +1,4 @@
-const socket = io("http://localhost:1111");
+const socket = io("https://yapzone-h6e1.onrender.com/");
 const shadowRoot = document.querySelector("#host").shadowRoot
 const createRoom = shadowRoot.querySelector(".createRoom")
 const joinRoom = shadowRoot.querySelector(".joinRoom")
