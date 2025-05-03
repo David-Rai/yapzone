@@ -250,7 +250,8 @@ function render_chat_room() {
 
     <div class="chat-room-top">
      <div class="chat-room-top-left">
-     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+     
+     <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
   <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
            
@@ -275,14 +276,6 @@ function render_chat_room() {
     `
 }
 
-
-// function addIcons() {
-//     const style = document.createElement("link");
-//     style.setAttribute("rel", "stylesheet");
-//     style.setAttribute("href", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
-
-//     shadow.appendChild(style);
-// }
 
 // Getting the username (using a callback to handle the async result)
 function get_user_name(callback) {
