@@ -61,6 +61,10 @@ io.on('connection',client=>{
 
 
 server.listen(PORT, () => {
-  data={}
+  data={
+    number:0,
+    users:[],
+    rooms:[]
+  }
   console.log(`Server running on ${PORT}`);
 });
