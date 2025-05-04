@@ -45,6 +45,7 @@ window.addEventListener("load", () => {
 
 
     // Render the UI
+    
     render_trigger();
 
     //setting up main
@@ -76,10 +77,28 @@ window.addEventListener("load", () => {
         }
         shadow.appendChild(mainBody);
 
-        create_room()
+        // create_room()
         join_room()
 
     }, 100)
+
+
+    //*********WINDOW MESSAGES****** */
+
+    //if room is created
+    window.addEventListener("message", event => {
+        if (event.source !== window) return
+        if (event.data?.source === "chat.js" && event.data?.type === "room-created") {
+            // alert(event.data.payload.name)
+            if (event.data.payload.state) {
+                mainBody.innerHTML = `${render_chat_room()}`
+                const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+                if (chat_room_name) {
+                    chat_room_name.innerHTML = `${event.data.payload.name}`;
+                }
+            }
+        }
+    })
 });
 
 
@@ -144,17 +163,6 @@ function main_setup() {
     })
 }
 
-//creating the room 
-function create_room() {
-    setTimeout(() => {
-        const createRoom = shadowRoot.querySelector('.chat .createRoom')
-        if (createRoom) {
-            createRoom.addEventListener("click", () => {
-                mainBody.innerHTML = `${render_chat_room()}`
-            })
-        }
-    }, 100)
-}
 //rendering the chat room
 function render_chat() {
     return `
@@ -215,12 +223,12 @@ function loadChatScripts() {
         chatScript.src = chrome.runtime.getURL("scripts/chat.js");
         shadowRoot.appendChild(chatScript);
 
-        window.addEventListener("message",(event)=>{
-            if(event.source !== window ) return
+        window.addEventListener("message", (event) => {
+            if (event.source !== window) return
 
-            if(event.data?.source==="chat.js" && event.data?.type==="connect_error"){
+            if (event.data?.source === "chat.js" && event.data?.type === "connect_error") {
                 // alert(event.data.payload)
-                mainBody.innerHTML=`
+                mainBody.innerHTML = `
                 <div id="error">
                 <h1>${event.data.payload}</h1>
                 </div>

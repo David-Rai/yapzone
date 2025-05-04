@@ -44,10 +44,6 @@ if (createRoom) {
     username = userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
-        const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
-        if (chat_room_name) {
-            chat_room_name.innerHTML = `${roomName}`;
-        }
         socket.emit("createRoom", roomName);
     });
 }
@@ -55,6 +51,16 @@ if (createRoom) {
 
 //if room is created
 socket.on("room-created", ({ roomName, state }) => {
+    window.postMessage({//send to content scripts 
+        source: "chat.js",
+        type: "room-created",
+        payload:{
+            state:true,
+            name:roomName
+        }
+    },
+        "*")
+
     client_roomName = roomName
     sending()
 
@@ -62,7 +68,6 @@ socket.on("room-created", ({ roomName, state }) => {
 
 //*********JOINING ROOM */
 if (joinRoom) {
-
     if (joining_roomId) {
         joining_roomId.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
@@ -70,7 +75,6 @@ if (joinRoom) {
                     return
                 }
                 let_join()
-
             }
         })
     }
@@ -126,6 +130,7 @@ function sending() {
     const message = shadowRoot.querySelector(".chat-room-bottom #message")
     if (message) {
         message.addEventListener("keydown", (e) => {
+            alert(message.value)
             if (e.key === "Enter") {
                 if (message.value.trim() === "") {
                     return
