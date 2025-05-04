@@ -71,6 +71,7 @@ window.addEventListener("message", (e) => {
 
     if (e.data?.source === "main.js" && e.data?.type === "send_message") {
         console.log(e.data.payload)
+        // socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
     }
 })
 
