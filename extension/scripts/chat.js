@@ -25,6 +25,20 @@ socket.on("connect", () => {
     console.log("Connected to server:", socket.id);
 });
 
+//*********CONNECTION ERROR********* */
+socket.on("connect_error", err => {
+    if (err) {
+        // alert("connection error")
+        window.postMessage({
+            source: "chat.js",
+            type: "connect_error",
+            payload: "server is busy"
+        },
+            "*"
+        )
+    }
+})
+
 //************CREATING THE ROOM*************
 if (createRoom) {
     username = userName.innerHTML

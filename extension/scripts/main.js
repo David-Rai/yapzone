@@ -208,13 +208,25 @@ function join_room() {
 }
 
 function loadChatScripts() {
-
     const socketScript = document.createElement("script");
     socketScript.src = chrome.runtime.getURL("scripts/socket.io.min.js");
     socketScript.onload = () => {
         const chatScript = document.createElement("script");
         chatScript.src = chrome.runtime.getURL("scripts/chat.js");
         shadowRoot.appendChild(chatScript);
+
+        window.addEventListener("message",(event)=>{
+            if(event.source !== window ) return
+
+            if(event.data?.source==="chat.js" && event.data?.type==="connect_error"){
+                // alert(event.data.payload)
+                mainBody.innerHTML=`
+                <div id="error">
+                <h1>${event.data.payload}</h1>
+                </div>
+                `
+            }
+        })
     };
     shadowRoot.appendChild(socketScript);
 }

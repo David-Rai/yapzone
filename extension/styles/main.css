@@ -315,3 +315,16 @@
     padding: 10px 16px;
 
 }
+#error{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#error h1{
+    font-size: 40px;
+    color: red;
+}
