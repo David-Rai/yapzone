@@ -45,7 +45,7 @@ window.addEventListener("load", () => {
 
 
     // Render the UI
-    
+
     render_trigger();
 
     //setting up main
@@ -77,7 +77,6 @@ window.addEventListener("load", () => {
         }
         shadow.appendChild(mainBody);
 
-        // create_room()
         join_room()
 
     }, 100)
@@ -95,13 +94,61 @@ window.addEventListener("load", () => {
                 const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
                 if (chat_room_name) {
                     chat_room_name.innerHTML = `${event.data.payload.name}`;
+                    add_send()
                 }
             }
         }
     })
 });
 
+//sending the message
+function add_send() {
+    const send_message = shadowRoot.querySelector("#send-message")
+    const message = shadowRoot.querySelector(".chat-room-bottom #message")
 
+    if (message) {
+        message.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                if (message.value.trim() === "") {
+                    return
+                }
+                get_user_name((name) => {
+                    window.postMessage({
+                        source: "main.js",
+                        type: "send_message",
+                        payload: {
+                            message: message.value,
+                            username: name
+                        }
+                    }, "*");
+                });
+            }
+        })
+    }
+
+    if (send_message) {
+        send_message.addEventListener("click", () => {
+            if (!message || message.value.trim() === "") return;
+    
+            // Optional: temporary alert for debugging
+            alert(message.value);
+    
+            // Get username and post message
+            get_user_name((name) => {
+                window.postMessage({
+                    source: "main.js",
+                    type: "send_message",
+                    payload: {
+                        message: message.value,
+                        username: name
+                    }
+                }, "*");
+            });
+        });
+    }
+    
+
+}
 //rendering the main
 function render_main() {
     // alert("rendering the main")

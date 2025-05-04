@@ -54,9 +54,9 @@ socket.on("room-created", ({ roomName, state }) => {
     window.postMessage({//send to content scripts 
         source: "chat.js",
         type: "room-created",
-        payload:{
-            state:true,
-            name:roomName
+        payload: {
+            state: true,
+            name: roomName
         }
     },
         "*")
@@ -65,6 +65,15 @@ socket.on("room-created", ({ roomName, state }) => {
     sending()
 
 })
+
+//**********SENDING THE MESSAGE************ */
+window.addEventListener("message", (e) => {
+
+    if (e.data?.source === "main.js" && e.data?.type === "send_message") {
+        console.log(e.data.payload)
+    }
+})
+
 
 //*********JOINING ROOM */
 if (joinRoom) {
@@ -125,34 +134,34 @@ socket.on("joined-message", ({ message }) => {
 });
 
 
-//*********SENDING MESSAGE***********/
-function sending() {
-    const message = shadowRoot.querySelector(".chat-room-bottom #message")
-    if (message) {
-        message.addEventListener("keydown", (e) => {
-            alert(message.value)
-            if (e.key === "Enter") {
-                if (message.value.trim() === "") {
-                    return
-                }
-                socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
-                message.value = ""
-            }
-        })
-    }
+// function sending() {
+//     // alert("sending valid")
+//     const message = shadowRoot.querySelector(".chat-room-bottom #message")
+//     if (message) {
+//         message.addEventListener("keydown", (e) => {
+//             alert(message.value)
+//             if (e.key === "Enter") {
+//                 if (message.value.trim() === "") {
+//                     return
+//                 }
+//                 socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
+//                 message.value = ""
+//             }
+//         })
+//     }
 
-    const send_message = shadowRoot.querySelector("#send-message")
-    if (send_message) {
-        send_message.addEventListener('click', () => {
-            const message = shadowRoot.querySelector(".chat-room-bottom #message")
-            if (message.value.trim() === "") {
-                return
-            }
-            socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
-            message.value = ""
-        })
-    }
-}
+//     const send_message = shadowRoot.querySelector("#send-message")
+//     if (send_message) {
+//         send_message.addEventListener('click', () => {
+//             const message = shadowRoot.querySelector(".chat-room-bottom #message")
+//             if (message.value.trim() === "") {
+//                 return
+//             }
+//             socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
+//             message.value = ""
+//         })
+//     }
+// }
 
 //*********RECEIVING THE MESSAGE
 socket.on("message", ({ message, name }) => {
