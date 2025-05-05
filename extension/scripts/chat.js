@@ -98,7 +98,39 @@ socket.on("message", ({ message, name }) => {
 
 
 
-// //*********JOINING ROOM */
+// //*********JOINING ROOM *************/
+window.addEventListener("message",(e)=>{
+    if(e.source !== window) return
+    
+    if(e.data.source==="main.js" && e.data.type==="join_room"){
+ 
+        console.log(e.data.payload)
+    const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+    const {name,roomName}=e.data.payload
+
+    if(chat_room_name){  chat_room_name.innerHTML=roomName}//setting the joined room name
+    socket.emit("joinRoom", { roomId:roomName, name })
+
+    }
+})
+
+//***************JOINED MESSAGE************ */
+socket.on("joined-message", ({ message }) => {
+    alert(message)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 // if (joinRoom) {
 //     if (joining_roomId) {
 //         joining_roomId.addEventListener("keydown", (e) => {

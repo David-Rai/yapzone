@@ -54,7 +54,7 @@ window.addEventListener("load", () => {
         triggering()//toggling
         loadChatScripts()//for adding the socket connection
         shadow.appendChild(mainBody);
-        // join_room()
+        join_room()
 
     }, 100)
 
@@ -79,7 +79,11 @@ window.addEventListener("load", () => {
             }
         }
     })
-});
+
+
+
+
+});//window load ending
 
 
 
@@ -217,6 +221,7 @@ join room
 function join_room() {
     setTimeout(() => {
         const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
+
         if (joinRoom) {
             const roomName = shadowRoot.querySelector('#joinRoom')
             if (roomName) {
@@ -225,6 +230,17 @@ function join_room() {
                         if (roomName.value.trim() === "") {
                             return
                         }
+                        get_user_name((username)=>{
+                            window.postMessage({
+                                source:"main.js",
+                                type:"join_room",
+                                payload:{
+                                    roomName:roomName.value.trim(),
+                                    name:username
+                                }
+                            },"*")
+                        })
+
                         mainBody.innerHTML = `${render_chat_room()}`
                     }
                 })
@@ -235,7 +251,19 @@ function join_room() {
                 if (roomName.value.trim() === "") {
                     return
                 }
+                get_user_name((username)=>{
+                    window.postMessage({
+                        source:"main.js",
+                        type:"join_room",
+                        payload:{
+                            roomName:roomName.value.trim(),
+                            name:username
+                        }
+                    },"*")
+                })
+
                 mainBody.innerHTML = `${render_chat_room()}`
+
             })
         }
     }, 100)
