@@ -80,7 +80,7 @@ window.addEventListener("message", (e) => {
 
 
 //*********RECEIVING THE MESSAGE
-socket.on("message", ({ message, name }) => {
+socket.on("received-message", ({ message, name }) => {
     const chat_room_center = shadowRoot.querySelector(".chat-room-center");
 
     const messageElement = `
@@ -101,12 +101,11 @@ socket.on("message", ({ message, name }) => {
 // //*********JOINING ROOM *************/
 window.addEventListener("message",(e)=>{
     if(e.source !== window) return
-    
+
     if(e.data.source==="main.js" && e.data.type==="join_room"){
- 
-        console.log(e.data.payload)
     const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
     const {name,roomName}=e.data.payload
+    client_roomName=roomName
 
     if(chat_room_name){  chat_room_name.innerHTML=roomName}//setting the joined room name
     socket.emit("joinRoom", { roomId:roomName, name })
@@ -116,7 +115,12 @@ window.addEventListener("message",(e)=>{
 
 //***************JOINED MESSAGE************ */
 socket.on("joined-message", ({ message }) => {
-    alert(message)
+            const chat_room = shadowRoot.querySelector(".chat-room-center");
+            if (chat_room) {
+                const messageElement = `<p class="join-message">${message}</p>`;
+                // Append the message to the chat room center
+                chat_room.innerHTML += messageElement;
+            }
 })
 
 

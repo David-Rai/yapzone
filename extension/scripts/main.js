@@ -239,6 +239,7 @@ function join_room() {
                                     name:username
                                 }
                             },"*")
+                            add_send()
                         })
 
                         mainBody.innerHTML = `${render_chat_room()}`
@@ -251,6 +252,7 @@ function join_room() {
                 if (roomName.value.trim() === "") {
                     return
                 }
+                
                 get_user_name((username)=>{
                     window.postMessage({
                         source:"main.js",
@@ -260,6 +262,7 @@ function join_room() {
                             name:username
                         }
                     },"*")
+                    add_send()
                 })
 
                 mainBody.innerHTML = `${render_chat_room()}`

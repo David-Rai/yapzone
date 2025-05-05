@@ -55,7 +55,7 @@ io.on('connection',client=>{
      //******SENDING MESSAGE */
      client.on("sendMessage",({roomName,message,name})=>{
       console.log(`${message} by ${name} in room ${roomName}`)
-      io.to(roomName).emit("message",{message,name})
+      io.to(roomName).emit("received-message",{message,name})
      })
 })
 
