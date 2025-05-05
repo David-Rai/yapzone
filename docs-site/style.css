@@ -6,7 +6,7 @@
 
 :root {
   --primary: #ff6b00;
-  --secondary:#373f47;
+  --secondary: #373f47;
 }
 
 body {
@@ -103,7 +103,7 @@ main {
 .bottom-right {
   height: 100%;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   height: 100%;
   width: 60%;
   flex-direction: column;
@@ -121,7 +121,7 @@ main {
 }
 
 .bottom-right button {
-  margin-left: 15rem;
+  /* margin-left: 15rem; */
   border: none;
   height: 4rem;
   width: 15rem;
@@ -130,7 +130,7 @@ main {
   border-radius: 10px;
   font-size: 28px;
   cursor: pointer;
-  transition: all 300ms ;
+  transition: all 300ms;
 }
 
 .bottom-right button:hover {
@@ -152,29 +152,35 @@ main {
 
 .help-content {
   width: 100%;
-  padding:0px 40px;
+  padding: 0px 40px;
   height: calc(100% - 4rem);
   overflow: hidden;
 }
-.content1,.content2{
+
+.content1,
+.content2 {
   font-size: 20px;
   color: var(--secondary);
   padding-top: 10px;
 }
+
 .help-top {
   height: 45%;
   width: 100%;
 }
-.help-bottom{
+
+.help-bottom {
   height: 45%;
   width: 100%;
 }
+
 .let-know {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .help-footer {
   width: 100%;
   height: 10%;
@@ -195,13 +201,14 @@ main {
   padding-left: 6.5rem;
 
 }
+
 .live-chat {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   position: absolute;
-  bottom: 10px ;
+  bottom: 10px;
   right: 10px;
   border: 0rem solid;
   border-radius: 0.5rem;
@@ -209,7 +216,8 @@ main {
   height: 30%;
   width: 25%;
 }
-.chat-input{
+
+.chat-input {
   width: 100%;
   display: flex;
   align-items: center;
@@ -217,7 +225,8 @@ main {
   position: relative;
   padding: 10px 10px;
 }
-.iwrap{
+
+.iwrap {
   height: 40px;
   width: 40px;
   background-color: gray;
@@ -228,10 +237,12 @@ main {
   position: absolute;
   right: 10px;
 }
-.live-chat p{
+
+.live-chat p {
   padding: 0px 10px 10px 0px;
-  
+
 }
+
 .live-chat h2 {
   padding: 2rem 0rem 0rem 1rem;
 }
@@ -247,4 +258,108 @@ main {
   cursor: pointer;
 }
 
-/* HELP PAGE */
+.menu{
+  display: none !important;
+}
+
+
+
+/* RESPONSIVENESS */
+@media screen and (max-width:600px) {
+  body{
+    overflow: hidden;
+  }
+  .menu{
+    display: block !important;
+    font-size: 20px;
+    z-index: 9999;
+    cursor: pointer;
+  }
+  .navbar ul {
+    transition: all 300ms;
+    position: absolute;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(253, 148, 0);
+    top: 0%;
+    right: -100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .show{
+    right: 0% !important;
+  }
+  .hide{
+    right: -100% !important;
+  }
+  .navbar ul li{
+    width: 100%;
+  }
+  .navbar ul li a{
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px  5px rgb(203, 203, 203);
+  }
+  main{
+    overflow: hidden;
+    padding: 0px 20px;
+  }
+  .top{
+    width: 100%;
+    font-size: 30px;
+    align-items: end;
+    justify-content: start;
+    padding: 0px;
+    padding-left: 20px;
+  }
+  .bottom-left{
+    height: 40%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bottom-right{
+    height: 100%;
+    width: 60%;
+    padding: 0px;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    /* background-color: yellow; */
+  }
+  .bottom-right h1{
+    font-size: 20px;
+  }
+  .bottom-right p{
+    padding:10px 0px;
+    font-size: 12px;
+    width: 100%;
+  }
+  .bottom-right button{
+    width: 120px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+
+  /* HELP PAGE */
+  .help-content{
+    padding: 0px 20px;
+    /* background-color: blue; */
+  }
+  .help-top p{
+    font-size: 0.9rem;
+  }
+  .let-know{
+    align-items:start;
+    justify-content: start;
+    flex-direction: column;
+  }
+  .let-know ul li{
+    font-size: 1rem;
+  }
+  .live-chat{
+    width: 50%;
+  }
+}
