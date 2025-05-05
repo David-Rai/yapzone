@@ -1,4 +1,3 @@
-const add_send=require("./send.js")
 
 // GLOBAL VARIABLE
 let trigger;
@@ -24,7 +23,7 @@ window.addEventListener("load", () => {
 
     //css styling
     const link = document.createElement("link");
-    link.rel = "stylesheet";
+    link.rel = "stylesheet";    
     link.href = chrome.runtime.getURL("styles/main.css");
     shadow.appendChild(link);
 
@@ -90,18 +89,67 @@ window.addEventListener("load", () => {
             if (event.data.payload.state) {
 
                 mainBody.innerHTML = `${render_chat_room()}`
+                add_send()
 
                 const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
                 if (chat_room_name) {
                     chat_room_name.innerHTML = `${event.data.payload.name}`;
                 }
 
-                add_send()
             }
         }
     })
 });
 
+
+
+//*************Event listener for sending the message****************** */
+function add_send() {
+    const send_message = shadowRoot.querySelector("#send-message");
+    const message = shadowRoot.querySelector(".chat-room-bottom #message");
+
+    if (message) {
+        message.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                if (message.value.trim() === "") return;
+                get_user_name((name) => {
+                    window.postMessage({
+                        source: "main.js",
+                        type: "send_message",
+                        payload: {
+                            message: message.value,
+                            username: name
+                        }
+                    }, "*");
+                })
+            }
+        });
+    }
+
+    setTimeout(() => {
+        const send_message = shadowRoot.querySelector("#send-message");
+        const message = shadowRoot.querySelector(".chat-room-bottom #message");
+    
+        if (send_message && message) {
+            send_message.addEventListener("click", () => {
+                if (message.value.trim() === "") return;
+                get_user_name((name) => {
+                    window.postMessage({
+                        source: "main.js",
+                        type: "send_message",
+                        payload: {
+                            message: message.value,
+                            username: name
+                        }
+                    }, "*");
+                });
+            });
+        } else {
+            console.log("Either send_message or message input is missing");
+        }
+    }, 100);
+    
+}
 
 //rendering the main
 function render_main() {

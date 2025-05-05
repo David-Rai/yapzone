@@ -44,8 +44,9 @@
                 "<all_urls>"
             ],
             "js": [
-                "scripts/main.js"   
+                "scripts/main.js"
             ],
+            "type":"module",
             "run_at": "document_end",
             "css": [
                 "styles/main.css"
