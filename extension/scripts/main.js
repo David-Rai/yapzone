@@ -1,3 +1,4 @@
+const add_send=require("./send.js")
 
 // GLOBAL VARIABLE
 let trigger;
@@ -84,59 +85,23 @@ window.addEventListener("load", () => {
     //if room is created
     window.addEventListener("message", event => {
         if (event.source !== window) return
+
         if (event.data?.source === "chat.js" && event.data?.type === "room-created") {
             if (event.data.payload.state) {
+
                 mainBody.innerHTML = `${render_chat_room()}`
+
                 const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
                 if (chat_room_name) {
                     chat_room_name.innerHTML = `${event.data.payload.name}`;
-                    add_send()
                 }
+
+                add_send()
             }
         }
     })
 });
 
-//sending message
-function add_send() {
-    const send_message = shadowRoot.querySelector("#send-message");
-    const message = shadowRoot.querySelector(".chat-room-bottom #message");
-
-    if (message) {
-        message.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                if (message.value.trim() === "") return;
-                get_user_name((name) => {
-                    window.postMessage({
-                        source: "main.js",
-                        type: "send_message",
-                        payload: {
-                            message: message.value,
-                            username: name
-                        }
-                    }, "*");
-                })
-            }
-        });
-    }
-
-    if (send_message) {
-        send_message.addEventListener("click", () => {
-            if (message && message.value.trim() !== "") {
-                get_user_name((name) => {
-                    window.postMessage({
-                        source: "main.js",
-                        type: "send_message",
-                        payload: {
-                            message: message.value,
-                            username: name
-                        }
-                    }, "*");
-                });
-            }
-        });
-    }
-}
 
 //rendering the main
 function render_main() {
