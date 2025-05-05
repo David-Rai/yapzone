@@ -23,7 +23,7 @@ window.addEventListener("load", () => {
 
     //css styling
     const link = document.createElement("link");
-    link.rel = "stylesheet";    
+    link.rel = "stylesheet";
     link.href = chrome.runtime.getURL("styles/main.css");
     shadow.appendChild(link);
 
@@ -51,37 +51,17 @@ window.addEventListener("load", () => {
     setTimeout(() => {
         // Add trigger to the shadow dom
         shadow.appendChild(trigger);
-
-        //Adding the eventlistener in the trigger button
-        const trigger_btn = shadowRoot.querySelector('#trigger-button');
-        if (trigger_btn) {
-            trigger_btn.addEventListener("click", () => {
-                if (btnState) {
-                    btnState = false
-                    host.style.right = "-100%"
-                    // mainBody.style.transform = "translateX(150%)"
-
-                    return
-                }
-
-                host.style.right = "0%"
-                // mainBody.style.transform = "translateX(0%)"
-
-                btnState = true
-                loadChatScripts()//for adding the socket connection
-
-            })
-        }
+        triggering()//toggling
+        loadChatScripts()//for adding the socket connection
         shadow.appendChild(mainBody);
-
-        join_room()
+        // join_room()
 
     }, 100)
 
 
     //*********WINDOW MESSAGES****** */
 
-    //if room is created
+    //IF ROOM CREATED DO THIS
     window.addEventListener("message", event => {
         if (event.source !== window) return
 
@@ -105,7 +85,7 @@ window.addEventListener("load", () => {
 
 //*************Event listener for sending the message****************** */
 function add_send() {
-    const send_message = shadowRoot.querySelector("#send-message");
+    const send_message = shadowRoot.querySelector(".chat-room-bottom #send-message");
     const message = shadowRoot.querySelector(".chat-room-bottom #message");
 
     if (message) {
@@ -126,31 +106,30 @@ function add_send() {
         });
     }
 
-    setTimeout(() => {
-        const send_message = shadowRoot.querySelector("#send-message");
-        const message = shadowRoot.querySelector(".chat-room-bottom #message");
-    
-        if (send_message && message) {
-            send_message.addEventListener("click", () => {
-                if (message.value.trim() === "") return;
-                get_user_name((name) => {
-                    window.postMessage({
-                        source: "main.js",
-                        type: "send_message",
-                        payload: {
-                            message: message.value,
-                            username: name
-                        }
-                    }, "*");
-                });
-            });
-        } else {
-            console.log("Either send_message or message input is missing");
-        }
-    }, 100);
-    
 }
 
+//triggering 
+function triggering() {
+    //Adding the eventlistener in the trigger button
+    const trigger_btn = shadowRoot.querySelector('#trigger-button');
+    if (trigger_btn) {
+        trigger_btn.addEventListener("click", () => {
+            if (btnState) {
+                btnState = false
+                host.style.right = "-100%"
+                // mainBody.style.transform = "translateX(150%)"
+
+                return
+            }
+
+            host.style.right = "0%"
+            // mainBody.style.transform = "translateX(0%)"
+
+            btnState = true
+        })
+    }
+
+}
 //rendering the main
 function render_main() {
     // alert("rendering the main")
