@@ -42,8 +42,6 @@ window.addEventListener("load", () => {
     // mainBody.style.transform = "translateX(150%)"
 
 
-
-
     // Render the UI
 
     render_trigger();
@@ -88,7 +86,6 @@ window.addEventListener("load", () => {
     window.addEventListener("message", event => {
         if (event.source !== window) return
         if (event.data?.source === "chat.js" && event.data?.type === "room-created") {
-            // alert(event.data.payload.name)
             if (event.data.payload.state) {
                 mainBody.innerHTML = `${render_chat_room()}`
                 const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
@@ -127,23 +124,26 @@ function add_send() {
     }
 
     if (send_message) {
+        // alert("send mesage valid")
         send_message.addEventListener("click", () => {
-            if (!message || message.value.trim() === "") return;
+            if (message.value.trim() === "") {
+                return
+            }
+            
+            alert("valid to go")
     
-            // Optional: temporary alert for debugging
-            alert(message.value);
-    
-            // Get username and post message
-            get_user_name((name) => {
-                window.postMessage({
-                    source: "main.js",
-                    type: "send_message",
-                    payload: {
-                        message: message.value,
-                        username: name
-                    }
-                }, "*");
-            });
+
+            // // Get username and post message
+            // get_user_name((name) => {
+            //     window.postMessage({
+            //         source: "main.js",
+            //         type: "send_message",
+            //         payload: {
+            //             message: message.value,
+            //             username: name
+            //         }
+            //     }, "*");
+            // });
         });
     }
     

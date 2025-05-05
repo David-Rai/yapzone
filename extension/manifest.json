@@ -44,8 +44,7 @@
                 "<all_urls>"
             ],
             "js": [
-                "scripts/main.js",
-                "scripts/storing.js"
+                "scripts/main.js"   
             ],
             "run_at": "document_end",
             "css": [

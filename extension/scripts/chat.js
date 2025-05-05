@@ -70,8 +70,10 @@ socket.on("room-created", ({ roomName, state }) => {
 window.addEventListener("message", (e) => {
 
     if (e.data?.source === "main.js" && e.data?.type === "send_message") {
-        console.log(e.data.payload)
-        // socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
+        console.log(e.data.payload.message)
+        let message = e.data.payload.message
+        let name = e.data.payload.username
+        socket.emit("sendMessage", { roomName: client_roomName, message, name })
     }
 })
 
