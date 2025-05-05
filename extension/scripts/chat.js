@@ -22,7 +22,7 @@ function getFormattedDate() {
 //checking if connection established
 socket.on("connect", () => {
     // alert("connected to the server")
-    console.log("Connected to server:", socket.id);
+    console.log("new client:", socket.id);
 });
 
 //************CREATING THE ROOM*************
