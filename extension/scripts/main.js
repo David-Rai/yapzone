@@ -20,7 +20,6 @@ window.addEventListener("load", () => {
 
     //accessing the shadow root
     shadowRoot = document.querySelector("#host").shadowRoot
-    // addIcons()
 
     //css styling
     const link = document.createElement("link");
@@ -98,17 +97,32 @@ window.addEventListener("load", () => {
     })
 });
 
-//sending the message
+//sending message
 function add_send() {
-    const send_message = shadowRoot.querySelector("#send-message")
-    const message = shadowRoot.querySelector(".chat-room-bottom #message")
+    const send_message = shadowRoot.querySelector("#send-message");
+    const message = shadowRoot.querySelector(".chat-room-bottom #message");
 
     if (message) {
         message.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                if (message.value.trim() === "") {
-                    return
-                }
+                if (message.value.trim() === "") return;
+                get_user_name((name) => {
+                    window.postMessage({
+                        source: "main.js",
+                        type: "send_message",
+                        payload: {
+                            message: message.value,
+                            username: name
+                        }
+                    }, "*");
+                })
+            }
+        });
+    }
+
+    if (send_message) {
+        send_message.addEventListener("click", () => {
+            if (message && message.value.trim() !== "") {
                 get_user_name((name) => {
                     window.postMessage({
                         source: "main.js",
@@ -120,35 +134,10 @@ function add_send() {
                     }, "*");
                 });
             }
-        })
-    }
-
-    if (send_message) {
-        // alert("send mesage valid")
-        send_message.addEventListener("click", () => {
-            if (message.value.trim() === "") {
-                return
-            }
-            
-            alert("valid to go")
-    
-
-            // // Get username and post message
-            // get_user_name((name) => {
-            //     window.postMessage({
-            //         source: "main.js",
-            //         type: "send_message",
-            //         payload: {
-            //             message: message.value,
-            //             username: name
-            //         }
-            //     }, "*");
-            // });
         });
     }
-    
-
 }
+
 //rendering the main
 function render_main() {
     // alert("rendering the main")

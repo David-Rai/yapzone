@@ -41,7 +41,7 @@ socket.on("connect_error", err => {
 
 //************CREATING THE ROOM*************
 if (createRoom) {
-    username = userName.innerHTML
+    // username = userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
         socket.emit("createRoom", roomName);
@@ -62,18 +62,19 @@ socket.on("room-created", ({ roomName, state }) => {
         "*")
 
     client_roomName = roomName
-    sending()
-
 })
 
 //**********SENDING THE MESSAGE************ */
 window.addEventListener("message", (e) => {
 
     if (e.data?.source === "main.js" && e.data?.type === "send_message") {
-        console.log(e.data.payload.message)
         let message = e.data.payload.message
         let name = e.data.payload.username
+
         socket.emit("sendMessage", { roomName: client_roomName, message, name })
+        const messageBody = shadowRoot.querySelector(".chat-room-bottom #message");
+   
+        messageBody.value = ""
     }
 })
 
