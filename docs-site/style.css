@@ -117,11 +117,11 @@ main {
   width: 80%;
   font-size: 20px;
   color: #373f47;
-  padding: 10px 0px 6rem 80px;
+  padding: 10px 0px 2rem 80px;
 }
 
 .bottom-right button {
-  /* margin-left: 15rem; */
+  margin-left: 15rem;
   border: none;
   height: 4rem;
   width: 15rem;
