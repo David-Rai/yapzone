@@ -136,7 +136,7 @@ function triggering() {
         trigger_btn.addEventListener("click", () => {
 
             if(!socketState || socketState===false){
-                alert("go")
+                // alert("go")
                 loadChatScripts()
                 socketState=true
             }
