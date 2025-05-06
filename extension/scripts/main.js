@@ -96,6 +96,7 @@ function add_send() {
         message.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 if (message.value.trim() === "") return;
+               
                 get_user_name((name) => {
                     window.postMessage({
                         source: "main.js",
@@ -108,6 +109,21 @@ function add_send() {
                 })
             }
         });
+
+        send_message.addEventListener("click",()=>{
+        if (message.value.trim() === "") return;
+               
+        get_user_name((name) => {
+            window.postMessage({
+                source: "main.js",
+                type: "send_message",
+                payload: {
+                    message: message.value,
+                    username: name
+                }
+            }, "*");
+        })
+        })
     }
 
 }
