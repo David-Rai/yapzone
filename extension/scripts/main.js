@@ -4,6 +4,7 @@ let trigger;
 let mainBody
 let shadowRoot, shadow
 let btnState = false;
+let socketState=false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 
@@ -52,7 +53,6 @@ window.addEventListener("load", () => {
         // Add trigger to the shadow dom
         shadow.appendChild(trigger);
         triggering()//toggling
-        loadChatScripts()//for adding the socket connection
         shadow.appendChild(mainBody);
         join_room()
 
@@ -134,6 +134,13 @@ function triggering() {
     const trigger_btn = shadowRoot.querySelector('#trigger-button');
     if (trigger_btn) {
         trigger_btn.addEventListener("click", () => {
+
+            if(!socketState || socketState===false){
+                alert("go")
+                loadChatScripts()
+                socketState=true
+            }
+
             if (btnState) {
                 btnState = false
                 host.style.right = "-100%"
