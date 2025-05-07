@@ -320,7 +320,7 @@ main {
     text-shadow: 1px 1px  5px rgb(203, 203, 203);
   }
   main{
-    overflow: hidden;
+    overflow-x: hidden;
     padding: 0px 20px;
   }
   .top{
