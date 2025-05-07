@@ -218,15 +218,19 @@ main {
 }
 
 .chat-input {
-  height: 40px;
+  height:40px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 10px 10px;
+  padding: 0px 10px;
 }
-
+.chat-input .input{
+  height: 100%;
+  width: 100%;
+  border-radius: 2rem;
+}
 .iwrap {
   height: 40px;
   width: 40px;
@@ -247,12 +251,13 @@ main {
 .live-chat h2 {
   padding: 2rem 0rem 0rem 1rem;
 }
-
+/* 
 .live-chat .input {
   border: none;
   width: 100%;
+  height: 100%;
   border-radius: 2rem;
-}
+} */
 
 
 #arrow:hover {
