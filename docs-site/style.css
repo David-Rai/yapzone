@@ -13,6 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
   height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* navbar */
@@ -205,16 +206,21 @@ main {
 .live-chat {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:space-evenly;
   flex-direction: column;
   position: absolute;
   bottom: 10px;
   right: 10px;
+  transition: all 300ms;
+  transform: translateX(150%);
   border: 0rem solid;
   border-radius: 0.5rem;
   background-color: #f68e43;
   height: 30%;
   width: 25%;
+}
+.showLive{
+  transform: translateX(0%);
 }
 
 .chat-input {
@@ -227,9 +233,11 @@ main {
   padding: 0px 10px;
 }
 .chat-input .input{
+  border: none;
   height: 100%;
   width: 100%;
   border-radius: 2rem;
+  padding-left: 20px;
 }
 .iwrap {
   height: 40px;
@@ -251,14 +259,6 @@ main {
 .live-chat h2 {
   padding: 2rem 0rem 0rem 1rem;
 }
-/* 
-.live-chat .input {
-  border: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 2rem;
-} */
-
 
 #arrow:hover {
   cursor: pointer;
@@ -297,6 +297,13 @@ main {
 }
 .cta-btn:hover {
   background-color: #000;
+}
+#chat{
+  display: block;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 40px;
 }
 
 
