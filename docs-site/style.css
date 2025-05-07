@@ -268,6 +268,37 @@ main {
   display: none !important;
 }
 
+/* CONTRIBUTE */
+.contribute{
+  height: calc(100% - 4rem);
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+
+}
+
+.contribute h1{
+  padding: 20px 0px;
+  font-size: 1.5rem;
+}
+.cta-btn {
+  margin-top: 20px;
+  background-color: #24292e;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.cta-btn:hover {
+  background-color: #000;
+}
+
 
 /* RESPONSIVENESS FOR TABLET*/
 @media only screen and (min-width: 600px) and (max-width: 1024px)  {
@@ -379,35 +410,9 @@ main {
   .live-chat{
     width: 50%;
   }
+  .contribute h1{
+    font-size: 1rem;
+    padding: 10px 0px;
+  }
 }
 
-
-/* CONTRIBUTE */
-.contribute{
-  height: calc(100% - 4rem);
-  /* background-color: red; */
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
-
-}
-
-.contribute h1{
-  padding: 20px 0px;
-}
-.cta-btn {
-  margin-top: 20px;
-  background-color: #24292e;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-.cta-btn:hover {
-  background-color: #000;
-}
