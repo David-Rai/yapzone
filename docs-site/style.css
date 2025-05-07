@@ -206,7 +206,7 @@ main {
 .live-chat {
   display: flex;
   align-items: center;
-  justify-content:space-evenly;
+  justify-content:space-around;
   flex-direction: column;
   position: absolute;
   bottom: 10px;
@@ -218,6 +218,13 @@ main {
   background-color: #f68e43;
   height: 30%;
   width: 25%;
+}
+.live-cross{
+  height: auto;
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: end;
+  padding: 10px;
 }
 .showLive{
   transform: translateX(0%);
