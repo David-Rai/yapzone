@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapzone</title>
+    <link rel="shortcut icon" href="../assets/48.png" type="image/x-icon">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        .documentation {
+            padding: 0px 40px;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p,
+        ul {
+            font-size: 1.1rem;
+        }
+
+        pre {
+            background-color: #e0e0e0;
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        ol {
+            margin-left: 2rem;
+        }
+
+        blockquote {
+            font-style: italic;
+            padding: 1rem;
+            background-color: #e0e0e0;
+            border-left: 5px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="../assets/logo.png" alt="logo" class="logo">
+            <h3>YAPZONE</h3>
+        </div>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="help.html">Help</a></li>
+            <li><a href="./contribute.html">Contribute</a></li>
+            <li><a href="documentation.html">Documentation</a></li>
+        </ul>
+
+        <i class="fa-solid fa-bars menu"></i>
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- Main Content -->
+    <div class="documentation">
+        <section id="overview">
+            <h2>Overview</h2>
+            <p><strong>Yapzone</strong> is a multi-part project designed to bring real-time communication features to
+                your browser with ease. It consists of:</p>
+            <ul>
+                <li>🧩 A Chrome extension for seamless chat and audio calling.</li>
+                <li>🖥️ A Node.js backend using Socket.IO to handle real-time communication.</li>
+                <li>📚 A static documentation site explaining how the extension works and how to contribute.</li>
+            </ul>
+            <p>Created with ❤️ by the homies, Yapzone is designed to make collaboration fun and easy!</p>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li>💬 Real-time messaging using WebSockets (Socket.IO)</li>
+                <li>🎧 Audio call functionality for live communication</li>
+                <li>🧩 Chrome extension UI for easy interaction</li>
+                <li>📚 Built-in static documentation website</li>
+            </ul>
+        </section>
+
+        <section id="folder-structure">
+            <h2>Folder Structure</h2>
+            <p>Here is the structure of the Yapzone project:</p>
+            <pre>
+yapzone/
+├── 📄 docs-site     # Static documentation (HTML, CSS, JS)
+├── 🧩 extension     # Chrome extension source (manifest, popup, scripts)
+├── 🖥️ server        # Backend (Node.js + Socket.IO)
+└── 📘 readme.md     # Project README
+      </pre>
+            <p><strong>docs-site/</strong>: Contains the documentation files built with HTML, CSS, and JS.</p>
+            <p><strong>extension/</strong>: Includes the source code for the Chrome extension (manifest, popup UI,
+                scripts).</p>
+            <p><strong>server/</strong>: The backend code (Node.js + Socket.IO) that handles the real-time chat and
+                audio call features.</p>
+            <p><strong>readme.md/</strong>: The project's main README file that includes an overview and instructions.
+            </p>
+        </section>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+            <p>To get started with Yapzone, follow the instructions below:</p>
+
+            <h3>🔹 Load the Chrome Extension</h3>
+            <p>1. Open Chrome and go to <code>chrome://extensions/</code></p>
+            <p>2. Enable <strong>Developer Mode</strong> at the top-right of the Extensions page.</p>
+            <p>3. Click <strong>Load unpacked</strong> and select the <strong>extension/</strong> folder from the
+                Yapzone project.</p>
+            <p>4. The extension will now be added to your browser and is ready for use!</p>
+
+            <h3>🔸 Run the Backend Server</h3>
+            <p>To run the backend server and enable real-time messaging and calling:</p>
+            <pre>
+cd server
+npm install
+node index.js
+      </pre>
+            <p>This will start the Node.js server, enabling the chat and call features in the extension. Make sure the
+                backend is running before using the extension.</p>
+        </section>
+
+        <section id="tech-stack">
+            <h2>Tech Stack</h2>
+            <ul>
+                <li>💻 **Frontend**: HTML, CSS, JavaScript</li>
+                <li>⚙️ **Backend**: Node.js, Socket.IO for real-time communication</li>
+                <li>🔌 **Chrome Extension**: Using Chrome APIs (popup, background scripts, content scripts)</li>
+                <li>📝 **Documentation**: Static HTML, CSS, and JavaScript for documentation site</li>
+            </ul>
+        </section>
+
+        <section id="contributing">
+            <h2>Contributing</h2>
+            <p>We welcome contributions to Yapzone! Here's how you can contribute:</p>
+            <ol>
+                <li>🍴 Fork the repository</li>
+                <li>🌿 Clone the repo to your local machine:
+                    <code>git clone https://github.com/your-username/yapzone.git</code>
+                </li>
+                <li>💻 Create a new branch: <code>git checkout -b feature-name</code></li>
+                <li>🖋️ Make your changes and commit them: <code>git commit -m "Add feature-name"</code></li>
+                <li>🚀 Push to your branch: <code>git push origin feature-name</code></li>
+                <li>🔁 Open a Pull Request</li>
+            </ol>
+            <p>We encourage open-source contributions to make this project even better!</p>
+        </section>
+
+        <section id="license">
+            <h2>License</h2>
+            <p>This project is licensed under the <strong>MIT License</strong>.</p>
+            <p>Feel free to use, modify, and improve the project. For more details, see the LICENSE file in the project
+                repository.</p>
+        </section>
+
+        <section id="quote">
+            <h2>Quote</h2>
+            <blockquote>
+                "This is another fun project started with my homies. No one is great to start. Starting is the 90% of
+                success."
+            </blockquote>
+        </section>
+    </div>
+
+    <script src="../scripts/script.js"></script>
+
+</body>
+
+</html>

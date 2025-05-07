@@ -13,6 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
   height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* navbar */
@@ -205,28 +206,46 @@ main {
 .live-chat {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:space-around;
   flex-direction: column;
   position: absolute;
   bottom: 10px;
   right: 10px;
+  transition: all 300ms;
+  transform: translateX(150%);
   border: 0rem solid;
   border-radius: 0.5rem;
   background-color: #f68e43;
   height: 30%;
   width: 25%;
 }
+.live-cross{
+  height: auto;
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: end;
+  padding: 10px;
+}
+.showLive{
+  transform: translateX(0%);
+}
 
 .chat-input {
-  height: 40px;
+  height:40px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 10px 10px;
+  padding: 0px 10px;
 }
-
+.chat-input .input{
+  border: none;
+  height: 100%;
+  width: 100%;
+  border-radius: 2rem;
+  padding-left: 20px;
+}
 .iwrap {
   height: 40px;
   width: 40px;
@@ -248,19 +267,50 @@ main {
   padding: 2rem 0rem 0rem 1rem;
 }
 
-.live-chat .input {
-  border: none;
-  width: 100%;
-  border-radius: 2rem;
-}
-
-
 #arrow:hover {
   cursor: pointer;
 }
 
 .menu{
   display: none !important;
+}
+
+/* CONTRIBUTE */
+.contribute{
+  height: calc(100% - 4rem);
+  /* background-color: red; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(to bottom, #ffffff, #f2f2f2);
+
+}
+
+.contribute h1{
+  padding: 20px 0px;
+  font-size: 1.5rem;
+}
+.cta-btn {
+  margin-top: 20px;
+  background-color: #24292e;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+.cta-btn:hover {
+  background-color: #000;
+}
+#chat{
+  display: block;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 40px;
 }
 
 
@@ -315,7 +365,7 @@ main {
     text-shadow: 1px 1px  5px rgb(203, 203, 203);
   }
   main{
-    overflow: hidden;
+    overflow-x: hidden;
     padding: 0px 20px;
   }
   .top{
@@ -374,4 +424,9 @@ main {
   .live-chat{
     width: 50%;
   }
+  .contribute h1{
+    font-size: 1rem;
+    padding: 10px 0px;
+  }
 }
+
