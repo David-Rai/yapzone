@@ -215,7 +215,7 @@ main {
   transform: translateX(150%);
   border: 0rem solid;
   border-radius: 0.5rem;
-  background-color: #f68e43;
+  background-color: #fba161;
   height: 30%;
   width: 25%;
 }
@@ -249,7 +249,7 @@ main {
 .iwrap {
   height: 40px;
   width: 40px;
-  background-color: gray;
+  background-color: rgb(207, 204, 204);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -257,8 +257,12 @@ main {
   position: absolute;
   right: 10px;
 }
+.iwrap i{
+  color: rgb(74, 72, 72);
+}
 
 .live-chat p {
+  color: rgb(75, 74, 74);
   padding: 0px 10px 10px 0px;
 
 }
