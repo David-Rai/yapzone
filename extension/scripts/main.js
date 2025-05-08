@@ -87,18 +87,18 @@ window.addEventListener("load", () => {
 });//window load ending
 
 //**********CREATING THR ROOM********* */
-function createRoom(){
-    const createBtn=shadowRoot.querySelector(".createRoom")
-    if(createBtn){
-        createBtn.addEventListener("click",()=>{
+function createRoom() {
+    const createBtn = shadowRoot.querySelector(".createRoom")
+    if (createBtn) {
+        createBtn.addEventListener("click", () => {
             // alert("Clicked")
             window.postMessage({
                 source: "main.js",
                 type: "create_room",
                 payload: {
-                    state:true
+                    state: true
                 }
-            },"*")
+            }, "*")
         })
     }
 }
@@ -206,18 +206,15 @@ function main_setup() {
                             `
                                 // content-script.js
                                 setTimeout(() => {
-                                    createRoom()
                                     //adding the user name
-                                        get_user_name((username) => {
-                                            alert(username)
-                                            const userId = shadowRoot.querySelector('#chat-room #yap-userId')
-                                            if(userId){
-                                                alert(username)
-                                            userId.innerHTML = username 
-                                            createRoom()
-                                            join_room()
-                                            }
-                                        });
+                                    get_user_name((username) => {
+                                        const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                                        userId.innerHTML = username
+                                    });
+
+                                    createRoom()
+                                    join_room()
+
 
                                 }, 100); // Reload after 5 seconds
 
@@ -249,7 +246,7 @@ function render_chat() {
 
 <div id="chat-top">
 <img src="${imgSrc}" alt="image" class="trigger-image">
-<h1 id="yap-userId">username</h1>
+<h1 id="yap-userId"></h1>
 </div>
 
 <button class="button createRoom ">
