@@ -54,6 +54,7 @@ window.addEventListener("load", () => {
         shadow.appendChild(trigger);
         triggering()//toggling
         shadow.appendChild(mainBody);
+        createRoom()
         join_room()
 
     }, 100)
@@ -85,7 +86,22 @@ window.addEventListener("load", () => {
 
 });//window load ending
 
-
+//**********CREATING THR ROOM********* */
+function createRoom(){
+    const createBtn=shadowRoot.querySelector(".createRoom")
+    if(createBtn){
+        createBtn.addEventListener("click",()=>{
+            // alert("Clicked")
+            window.postMessage({
+                source: "main.js",
+                type: "create_room",
+                payload: {
+                    state:true
+                }
+            },"*")
+        })
+    }
+}
 
 //*************Event listener for sending the message****************** */
 function add_send() {
@@ -190,27 +206,20 @@ function main_setup() {
                             `
                                 // content-script.js
                                 setTimeout(() => {
-                                    // location.reload();
-                                                   //adding the user name
+                                    createRoom()
+                                    //adding the user name
                                         get_user_name((username) => {
                                             alert(username)
                                             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
                                             if(userId){
-                                                alert("valid")
-                                            }
                                             userId.innerHTML = username
+                                            createRoom()
+                                            join_room()
+                                            }
                                         });
 
                                 }, 100); // Reload after 5 seconds
 
-                                //    aler("here")
-
-                                //         //adding the user name
-                                //         get_user_name((username) => {
-                                //             alert(username)
-                                //             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
-                                //             userId.innerHTML = username
-                                //         });
                             }
                         })
 
