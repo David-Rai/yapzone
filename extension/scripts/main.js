@@ -212,7 +212,8 @@ function main_setup() {
                                             alert(username)
                                             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
                                             if(userId){
-                                            userId.innerHTML = username
+                                                alert(username)
+                                            userId.innerHTML = username 
                                             createRoom()
                                             join_room()
                                             }

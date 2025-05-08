@@ -44,20 +44,13 @@ socket.on("connect_error", err => {
 window.addEventListener("message", e => {
     if (e.source !== window) return
     if (e.data?.source === "main.js" && e.data?.type === "create_room") {
-        console.log(e.data.payload)
+        // console.log(e.data.payload)
         if (e.data.payload.state) {
             const roomName = getFormattedDate();
             socket.emit("createRoom", roomName);
         }
     }
 })
-// if (createRoom) {
-//     // username = userName.innerHTML
-//     createRoom.addEventListener("click", () => {
-//         const roomName = getFormattedDate();
-//         socket.emit("createRoom", roomName);
-//     });
-// }
 
 
 //*******ROOM CREATED NOTIFICATION********* */
