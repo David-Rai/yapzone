@@ -4,6 +4,7 @@ let trigger;
 let mainBody
 let shadowRoot, shadow
 let btnState = false;
+let socketState=false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 
@@ -20,7 +21,6 @@ window.addEventListener("load", () => {
 
     //accessing the shadow root
     shadowRoot = document.querySelector("#host").shadowRoot
-    // addIcons()
 
     //css styling
     const link = document.createElement("link");
@@ -42,9 +42,8 @@ window.addEventListener("load", () => {
     // mainBody.style.transform = "translateX(150%)"
 
 
-
-
     // Render the UI
+
     render_trigger();
 
     //setting up main
@@ -53,36 +52,109 @@ window.addEventListener("load", () => {
     setTimeout(() => {
         // Add trigger to the shadow dom
         shadow.appendChild(trigger);
-
-        //Adding the eventlistener in the trigger button
-        const trigger_btn = shadowRoot.querySelector('#trigger-button');
-        if (trigger_btn) {
-            trigger_btn.addEventListener("click", () => {
-                if (btnState) {
-                    btnState = false
-                    host.style.right = "-100%"
-                    // mainBody.style.transform = "translateX(150%)"
-
-                    return
-                }
-
-                host.style.right = "0%"
-                // mainBody.style.transform = "translateX(0%)"
-
-                btnState = true
-                loadChatScripts()//for adding the socket connection
-
-            })
-        }
+        triggering()//toggling
         shadow.appendChild(mainBody);
-
-        create_room()
         join_room()
 
     }, 100)
-});
 
 
+    //*********WINDOW MESSAGES****** */
+
+    //IF ROOM CREATED DO THIS
+    window.addEventListener("message", event => {
+        if (event.source !== window) return
+
+        if (event.data?.source === "chat.js" && event.data?.type === "room-created") {
+            if (event.data.payload.state) {
+
+                mainBody.innerHTML = `${render_chat_room()}`
+                add_send()
+
+                const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+                if (chat_room_name) {
+                    chat_room_name.innerHTML = `${event.data.payload.name}`;
+                }
+
+            }
+        }
+    })
+
+
+
+
+});//window load ending
+
+
+
+//*************Event listener for sending the message****************** */
+function add_send() {
+    const send_message = shadowRoot.querySelector(".chat-room-bottom #send-message");
+    const message = shadowRoot.querySelector(".chat-room-bottom #message");
+
+    if (message) {
+        message.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                if (message.value.trim() === "") return;
+               
+                get_user_name((name) => {
+                    window.postMessage({
+                        source: "main.js",
+                        type: "send_message",
+                        payload: {
+                            message: message.value,
+                            username: name
+                        }
+                    }, "*");
+                })
+            }
+        });
+
+        send_message.addEventListener("click",()=>{
+        if (message.value.trim() === "") return;
+               
+        get_user_name((name) => {
+            window.postMessage({
+                source: "main.js",
+                type: "send_message",
+                payload: {
+                    message: message.value,
+                    username: name
+                }
+            }, "*");
+        })
+        })
+    }
+
+}
+
+//triggering 
+function triggering() {
+    //Adding the eventlistener in the trigger button
+    const trigger_btn = shadowRoot.querySelector('#trigger-button');
+    if (trigger_btn) {
+        trigger_btn.addEventListener("click", () => {
+
+            if(!socketState || socketState===false){
+                // alert("go")
+                loadChatScripts()
+                socketState=true
+            }
+
+            if (btnState) {
+                btnState = false
+                host.style.right = "-100%"
+                // mainBody.style.transform = "translateX(150%)"
+
+                return
+            }
+
+            host.style.right = "0%"
+            btnState = true
+        })
+    }
+
+}
 //rendering the main
 function render_main() {
     // alert("rendering the main")
@@ -116,13 +188,22 @@ function main_setup() {
                             else {
                                 mainBody.innerHTML = `
                             ${render_chat()}
-                                `
+                            `
+                            // content-script.js
+setTimeout(() => {
+    host.style.right = "0%"
+    btnState = true
+    location.reload();
+  }, 1000); // Reload after 5 seconds
+  
+                        //    aler("here")
 
-                                //adding the user name
-                                get_user_name((username) => {
-                                    const userId = shadowRoot.querySelector('#chat-room #yap-userId')
-                                    userId.innerHTML = username
-                                });
+                        //         //adding the user name
+                        //         get_user_name((username) => {
+                        //             alert(username)
+                        //             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                        //             userId.innerHTML = username
+                        //         });
                             }
                         })
 
@@ -144,17 +225,6 @@ function main_setup() {
     })
 }
 
-//creating the room 
-function create_room() {
-    setTimeout(() => {
-        const createRoom = shadowRoot.querySelector('.chat .createRoom')
-        if (createRoom) {
-            createRoom.addEventListener("click", () => {
-                mainBody.innerHTML = `${render_chat_room()}`
-            })
-        }
-    }, 100)
-}
 //rendering the chat room
 function render_chat() {
     return `
@@ -181,6 +251,7 @@ join room
 function join_room() {
     setTimeout(() => {
         const joinRoom = shadowRoot.querySelector(".chat .joinRoom")
+
         if (joinRoom) {
             const roomName = shadowRoot.querySelector('#joinRoom')
             if (roomName) {
@@ -189,6 +260,18 @@ function join_room() {
                         if (roomName.value.trim() === "") {
                             return
                         }
+                        get_user_name((username)=>{
+                            window.postMessage({
+                                source:"main.js",
+                                type:"join_room",
+                                payload:{
+                                    roomName:roomName.value.trim(),
+                                    name:username
+                                }
+                            },"*")
+                            add_send()
+                        })
+
                         mainBody.innerHTML = `${render_chat_room()}`
                     }
                 })
@@ -199,7 +282,21 @@ function join_room() {
                 if (roomName.value.trim() === "") {
                     return
                 }
+                
+                get_user_name((username)=>{
+                    window.postMessage({
+                        source:"main.js",
+                        type:"join_room",
+                        payload:{
+                            roomName:roomName.value.trim(),
+                            name:username
+                        }
+                    },"*")
+                    add_send()
+                })
+
                 mainBody.innerHTML = `${render_chat_room()}`
+
             })
         }
     }, 100)
@@ -208,13 +305,25 @@ function join_room() {
 }
 
 function loadChatScripts() {
-
     const socketScript = document.createElement("script");
     socketScript.src = chrome.runtime.getURL("scripts/socket.io.min.js");
     socketScript.onload = () => {
         const chatScript = document.createElement("script");
         chatScript.src = chrome.runtime.getURL("scripts/chat.js");
         shadowRoot.appendChild(chatScript);
+
+        window.addEventListener("message", (event) => {
+            if (event.source !== window) return
+
+            if (event.data?.source === "chat.js" && event.data?.type === "connect_error") {
+                // alert(event.data.payload)
+                mainBody.innerHTML = `
+                <div id="error">
+                <h1>${event.data.payload}</h1>
+                </div>
+                `
+            }
+        })
     };
     shadowRoot.appendChild(socketScript);
 }

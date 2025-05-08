@@ -8,7 +8,7 @@ const userName = shadowRoot.querySelector(".chat #yap-userId")
 let client_roomName;
 let username
 
-//generating the unique id for room id
+//***********UNIQUE ROOM ID************ */
 function getFormattedDate() {
     const now = new Date();
 
@@ -19,124 +19,68 @@ function getFormattedDate() {
     return `${hours}:${minutes}:${seconds}`;
 }
 
-//checking if connection established
+//**********MESSAGE ON CONNECTION********* */
 socket.on("connect", () => {
     // alert("connected to the server")
-    console.log("new client:", socket.id);
+    console.log("Connected to server:", socket.id);
 });
+
+//*********CONNECTION ERROR********* */
+socket.on("connect_error", err => {
+    if (err) {
+        // alert("connection error")
+        window.postMessage({
+            source: "chat.js",
+            type: "connect_error",
+            payload: "server is busy"
+        },
+            "*"
+        )
+    }
+})
 
 //************CREATING THE ROOM*************
 if (createRoom) {
-    username = userName.innerHTML
+    // username = userName.innerHTML
     createRoom.addEventListener("click", () => {
         const roomName = getFormattedDate();
-        const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
-        if (chat_room_name) {
-            chat_room_name.innerHTML = `${roomName}`;
-        }
         socket.emit("createRoom", roomName);
     });
 }
 
 
-//if room is created
+//*******ROOM CREATED NOTIFICATION********* */
 socket.on("room-created", ({ roomName, state }) => {
-    client_roomName = roomName
-    sending()
+    window.postMessage({//send to content scripts 
+        source: "chat.js",
+        type: "room-created",
+        payload: {
+            state: true,
+            name: roomName
+        }
+    },
+        "*")
 
+    client_roomName = roomName
 })
 
-//*********JOINING ROOM */
-if (joinRoom) {
+//**********SENDING THE MESSAGE************ */
+window.addEventListener("message", (e) => {
 
-    if (joining_roomId) {
-        joining_roomId.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                if (joining_roomId.value.trim() === "") {
-                    return
-                }
-                let_join()
+    if (e.data?.source === "main.js" && e.data?.type === "send_message") {
+        let message = e.data.payload.message
+        let name = e.data.payload.username
 
-            }
-        })
+        socket.emit("sendMessage", { roomName: client_roomName, message, name })
+        const messageBody = shadowRoot.querySelector(".chat-room-bottom #message");
+   
+        messageBody.value = ""
     }
+})
 
-
-    joinRoom.addEventListener("click", () => {
-        if (joining_roomId.value.trim() === "") {
-            return
-        }
-        let_join()
-    })
-}
-
-function let_join() {
-    // alert(joining_roomId.value)
-    client_roomName = joining_roomId.value
-
-    const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
-    if (chat_room_name) {
-        chat_room_name.innerHTML = `${client_roomName}`;
-    }
-    sending()
-    username = userName.innerHTML
-    socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
-
-}
-
-socket.on("joined-message", ({ message }) => {
-    // Find the chat room container
-    const chat_room_center = shadowRoot.querySelector(".chat-room-center");
-
-    if (chat_room_center) {
-        // Create the message element
-        const messageElement = `<p class="join-message">${message}</p>`;
-        // Append the message to the chat room center
-        chat_room_center.innerHTML += messageElement;
-    } else {
-        // Retry after 100ms if chat_room_center is not available
-        setTimeout(() => {
-            const chat_room = shadowRoot.querySelector(".chat-room-center");
-            if (chat_room) {
-                const messageElement = `<p class="join-message">${message}</p>`;
-                // Append the message to the chat room center
-                chat_room.innerHTML += messageElement;
-            }
-        }, 100);
-    }
-});
-
-
-//*********SENDING MESSAGE***********/
-function sending() {
-    const message = shadowRoot.querySelector(".chat-room-bottom #message")
-    if (message) {
-        message.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                if (message.value.trim() === "") {
-                    return
-                }
-                socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
-                message.value = ""
-            }
-        })
-    }
-
-    const send_message = shadowRoot.querySelector("#send-message")
-    if (send_message) {
-        send_message.addEventListener('click', () => {
-            const message = shadowRoot.querySelector(".chat-room-bottom #message")
-            if (message.value.trim() === "") {
-                return
-            }
-            socket.emit("sendMessage", { roomName: client_roomName, message: message.value, name: username })
-            message.value = ""
-        })
-    }
-}
 
 //*********RECEIVING THE MESSAGE
-socket.on("message", ({ message, name }) => {
+socket.on("received-message", ({ message, name }) => {
     const chat_room_center = shadowRoot.querySelector(".chat-room-center");
 
     const messageElement = `
@@ -151,3 +95,99 @@ socket.on("message", ({ message, name }) => {
     // Auto-scroll to bottom
     chat_room_center.scrollTop = chat_room_center.scrollHeight;
 });
+
+
+
+// //*********JOINING ROOM *************/
+window.addEventListener("message",(e)=>{
+    if(e.source !== window) return
+
+    if(e.data.source==="main.js" && e.data.type==="join_room"){
+    const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+    const {name,roomName}=e.data.payload
+    client_roomName=roomName
+
+    if(chat_room_name){  chat_room_name.innerHTML=roomName}//setting the joined room name
+    socket.emit("joinRoom", { roomId:roomName, name })
+
+    }
+})
+
+//***************JOINED MESSAGE************ */
+socket.on("joined-message", ({ message }) => {
+            const chat_room = shadowRoot.querySelector(".chat-room-center");
+            if (chat_room) {
+                const messageElement = `<p class="join-message">${message}</p>`;
+                // Append the message to the chat room center
+                chat_room.innerHTML += messageElement;
+            }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+// if (joinRoom) {
+//     if (joining_roomId) {
+//         joining_roomId.addEventListener("keydown", (e) => {
+//             if (e.key === "Enter") {
+//                 if (joining_roomId.value.trim() === "") {
+//                     return
+//                 }
+//                 let_join()
+//             }
+//         })
+//     }
+
+
+//     joinRoom.addEventListener("click", () => {
+//         if (joining_roomId.value.trim() === "") {
+//             return
+//         }
+//         let_join()
+//     })
+// }
+
+// function let_join() {
+//     // alert(joining_roomId.value)
+//     client_roomName = joining_roomId.value
+
+//     const chat_room_name = shadowRoot.getElementById('yap-chat-room-name'); // get it fresh
+//     if (chat_room_name) {
+//         chat_room_name.innerHTML = `${client_roomName}`;
+//     }
+//     username = userName.innerHTML
+//     socket.emit("joinRoom", { roomId: joining_roomId.value, name: userName.innerHTML })
+
+// }
+
+// socket.on("joined-message", ({ message }) => {
+//     // Find the chat room container
+//     const chat_room_center = shadowRoot.querySelector(".chat-room-center");
+
+//     if (chat_room_center) {
+//         // Create the message element
+//         const messageElement = `<p class="join-message">${message}</p>`;
+//         // Append the message to the chat room center
+//         chat_room_center.innerHTML += messageElement;
+//     } else {
+//         // Retry after 100ms if chat_room_center is not available
+//         setTimeout(() => {
+//             const chat_room = shadowRoot.querySelector(".chat-room-center");
+//             if (chat_room) {
+//                 const messageElement = `<p class="join-message">${message}</p>`;
+//                 // Append the message to the chat room center
+//                 chat_room.innerHTML += messageElement;
+//             }
+//         }, 100);
+//     }
+// });
+
