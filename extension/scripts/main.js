@@ -150,8 +150,6 @@ function triggering() {
             }
 
             host.style.right = "0%"
-            // mainBody.style.transform = "translateX(0%)"
-
             btnState = true
         })
     }
@@ -190,13 +188,22 @@ function main_setup() {
                             else {
                                 mainBody.innerHTML = `
                             ${render_chat()}
-                                `
+                            `
+                            // content-script.js
+setTimeout(() => {
+    host.style.right = "0%"
+    btnState = true
+    location.reload();
+  }, 1000); // Reload after 5 seconds
+  
+                        //    aler("here")
 
-                                //adding the user name
-                                get_user_name((username) => {
-                                    const userId = shadowRoot.querySelector('#chat-room #yap-userId')
-                                    userId.innerHTML = username
-                                });
+                        //         //adding the user name
+                        //         get_user_name((username) => {
+                        //             alert(username)
+                        //             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                        //             userId.innerHTML = username
+                        //         });
                             }
                         })
 
