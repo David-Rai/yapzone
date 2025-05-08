@@ -4,7 +4,7 @@ let trigger;
 let mainBody
 let shadowRoot, shadow
 let btnState = false;
-let socketState=false;
+let socketState = false;
 const imgSrc = chrome.runtime.getURL("icons/48.png");
 const sendSrc = chrome.runtime.getURL("icons/send-message.png");
 
@@ -96,7 +96,7 @@ function add_send() {
         message.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
                 if (message.value.trim() === "") return;
-               
+
                 get_user_name((name) => {
                     window.postMessage({
                         source: "main.js",
@@ -110,19 +110,19 @@ function add_send() {
             }
         });
 
-        send_message.addEventListener("click",()=>{
-        if (message.value.trim() === "") return;
-               
-        get_user_name((name) => {
-            window.postMessage({
-                source: "main.js",
-                type: "send_message",
-                payload: {
-                    message: message.value,
-                    username: name
-                }
-            }, "*");
-        })
+        send_message.addEventListener("click", () => {
+            if (message.value.trim() === "") return;
+
+            get_user_name((name) => {
+                window.postMessage({
+                    source: "main.js",
+                    type: "send_message",
+                    payload: {
+                        message: message.value,
+                        username: name
+                    }
+                }, "*");
+            })
         })
     }
 
@@ -135,10 +135,9 @@ function triggering() {
     if (trigger_btn) {
         trigger_btn.addEventListener("click", () => {
 
-            if(!socketState || socketState===false){
-                // alert("go")
+            if (!socketState || socketState === false) {
                 loadChatScripts()
-                socketState=true
+                socketState = true
             }
 
             if (btnState) {
@@ -189,21 +188,29 @@ function main_setup() {
                                 mainBody.innerHTML = `
                             ${render_chat()}
                             `
-                            // content-script.js
-setTimeout(() => {
-    host.style.right = "0%"
-    btnState = true
-    location.reload();
-  }, 1000); // Reload after 5 seconds
-  
-                        //    aler("here")
+                                // content-script.js
+                                setTimeout(() => {
+                                    // location.reload();
+                                                   //adding the user name
+                                        get_user_name((username) => {
+                                            alert(username)
+                                            const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                                            if(userId){
+                                                alert("valid")
+                                            }
+                                            userId.innerHTML = username
+                                        });
 
-                        //         //adding the user name
-                        //         get_user_name((username) => {
-                        //             alert(username)
-                        //             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
-                        //             userId.innerHTML = username
-                        //         });
+                                }, 100); // Reload after 5 seconds
+
+                                //    aler("here")
+
+                                //         //adding the user name
+                                //         get_user_name((username) => {
+                                //             alert(username)
+                                //             const userId = shadowRoot.querySelector('#chat-room #yap-userId')
+                                //             userId.innerHTML = username
+                                //         });
                             }
                         })
 
@@ -260,15 +267,15 @@ function join_room() {
                         if (roomName.value.trim() === "") {
                             return
                         }
-                        get_user_name((username)=>{
+                        get_user_name((username) => {
                             window.postMessage({
-                                source:"main.js",
-                                type:"join_room",
-                                payload:{
-                                    roomName:roomName.value.trim(),
-                                    name:username
+                                source: "main.js",
+                                type: "join_room",
+                                payload: {
+                                    roomName: roomName.value.trim(),
+                                    name: username
                                 }
-                            },"*")
+                            }, "*")
                             add_send()
                         })
 
@@ -282,16 +289,16 @@ function join_room() {
                 if (roomName.value.trim() === "") {
                     return
                 }
-                
-                get_user_name((username)=>{
+
+                get_user_name((username) => {
                     window.postMessage({
-                        source:"main.js",
-                        type:"join_room",
-                        payload:{
-                            roomName:roomName.value.trim(),
-                            name:username
+                        source: "main.js",
+                        type: "join_room",
+                        payload: {
+                            roomName: roomName.value.trim(),
+                            name: username
                         }
-                    },"*")
+                    }, "*")
                     add_send()
                 })
 

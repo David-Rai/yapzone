@@ -1,11 +1,12 @@
-const socket = io("https://yapzone-h6e1.onrender.com/");
+// const socket = io("https://yapzone-h6e1.onrender.com/");
+const socket = io("http://localhost:1111");
 const shadowRoot = document.querySelector("#host").shadowRoot
 const createRoom = shadowRoot.querySelector(".createRoom")
 const joinRoom = shadowRoot.querySelector(".joinRoom")
 const joining_roomId = shadowRoot.querySelector("#joinRoom")
 const userName = shadowRoot.querySelector(".chat #yap-userId")
 
-let client_roomName;
+let client_roomName; 
 let username
 
 //***********UNIQUE ROOM ID************ */
