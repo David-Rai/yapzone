@@ -1,0 +1,50 @@
+main {
+    min-height: 100vh;
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+}
+
+.dash-top {
+    height: 30%;
+    width: 100%;
+    /* background-color: yellow; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.dash-bottom {
+    height: 70%;
+    width: 100%;
+    /* background-color: crimson; */
+    display: flex;
+    padding: 10px 0px;
+}
+
+.dash-left,.dash-right{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+.dash-left ul,.dash-right ul{
+    width: 100%;
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+}
+.dash-left ul li,.dash-right ul li{
+   font-size: 1rem;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #efebeb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
