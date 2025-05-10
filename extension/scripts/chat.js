@@ -11,7 +11,6 @@ let username
 //***********UNIQUE ROOM ID************ */
 function getFormattedDate() {
     const now = new Date();
-
     const hours = String(now.getHours()).padStart(2, '0');   // 00–23
     const minutes = String(now.getMinutes()).padStart(2, '0'); // 00–59
     const seconds = String(now.getSeconds()).padStart(2, '0'); // 00–59
