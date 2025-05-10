@@ -6,19 +6,11 @@ const {Server}=require('socket.io')
 const cors=require('cors')
 
 const server=http.createServer(app)
-const io=new Server(server,{
-  cors:{
-    origin:"*"
-  }
-})
+const io=new Server(server)
 
 //middlewares
 app.use(express.json());
-app.use(cors({
-  origin:[
-    '*'
-  ]
-}))
+app.use(cors())
 
 let data={
   number:0,
