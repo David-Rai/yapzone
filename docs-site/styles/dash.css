@@ -37,7 +37,6 @@ main {
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 .dash-left ul li,.dash-right ul li{
    font-size: 1rem;
@@ -48,10 +47,4 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-@media screen and (min-width:700px){
-    .dash-left ul li,.dash-right ul li{
-        width: 60%;
-    }
 }
