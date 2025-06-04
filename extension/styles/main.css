@@ -328,3 +328,16 @@
     font-size: 40px;
     color: red;
 }
+.startVideoBtn{
+    margin: 10px;
+    border: none;
+    height: 30px;
+    width: 120px;
+    background-color: var(--primary);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+}

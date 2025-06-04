@@ -366,8 +366,9 @@ function render_chat_room() {
            
 <h1 id="yap-room-id">RoomID-<p id="yap-chat-room-name">room name</p></h1>
      </div>
-     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-  <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 14 0h-2zm-5 9a7 7 0 0 0 7-7h-2a5 5 0 0 1-10 0H5a7 7 0 0 0 7 7zm-1-2v3h2v-3h-2z"/>
+     <a href="https://david-webrtc.netlify.app" target="blank" class="startVideoBtn">
+     Start Video
+     </a>
 </svg>
         </div>
 
